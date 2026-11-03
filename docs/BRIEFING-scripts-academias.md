@@ -10,7 +10,7 @@ Levar para as academias o mesmo formato da biblioteca de scripts que existe no *
 2. Português do Brasil, tom de conversa de WhatsApp, frases curtas, **sem travessões**, sem promessas exageradas.
 3. Metodologia **AQÚI** em todo toque: Acolher/Atenção, Qualificar, Única coisa (um pedido por mensagem), Incentivar. Nunca perguntar "quer que eu te mande os planos?"; sempre propor horário/próximo passo. Na GeFit, "aula experimental" não existe: o nome é **Experiência** (jornada de 5 a 12 dias), com presente de boas-vindas (mapeamento, consultoria, avaliação).
 4. **Não mexer na RG Cave** (`gefitcorporativo-glitch/rgcave-plataforma`) sem pedido: está em uso real.
-5. Eagler **não tem piscina**: nada de natação/hidro nas variações dela. O menu lateral da Eagler **não tem** a aba "Ferramentas & Scripts" (foi retirada a pedido); não recolocar.
+5. Eagler **não tem piscina**: nada de natação/hidro nas variações dela. A aba "Ferramentas & Scripts" do menu lateral da Eagler **voltou** (03/11/2026): a retirada tinha sido confusão com um botão da GeFit. Manter.
 
 ## Onde está cada coisa
 | Item | Onde |
@@ -57,3 +57,4 @@ Mais as **objeções** (preço, tempo, "vou pensar", "vou ver com marido/esposa"
 
 ## Próximo momento (ideia aprovada, ainda não construir)
 - Área de **Estratégia** no Hub de cada academia: definir junto com o gestor os perfis de lead/aluno e os funis (etapas, número de contatos, descanso). A biblioteca passaria a ler essa configuração em vez de ter perfis e funis fixos no arquivo.
+- Organizar tudo de scripts num lugar só (Ferramentas & Scripts, Biblioteca de scripts e Universidade Corporativa), para ficar mais fácil de acessar.
