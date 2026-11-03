@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="ferramentas-academia.js"></script>
 <style>
 :root{
   --fundo:#F8F6F6;--fundo2:#ffffff;--fundo3:#F1EDED;
@@ -472,6 +473,7 @@ header.top button,header.top a{color:rgba(255,255,255,.88)}
       <input class="kb-search" id="kbSearch" placeholder="🔍 Buscar por nome ou código..." oninput="renderKanbanBoard()" style="margin-bottom:0;flex:1;min-width:220px">
       <select class="fsel" id="kbFiltroConsultorSel" style="display:none;width:auto;min-width:180px;" onchange="mudarFiltroConsultorKanban(this.value)"><option value="">👥 Todos(as) os(as) consultores(as)</option></select>
       <button class="btn-primary" onclick="abrirNovoCardManual()">+ Adicionar Card</button>
+      <button class="btn-gh" onclick="abrirScriptsKanban()" title="Biblioteca de scripts por funil, com opção 1 e opção 2">📚 Scripts</button>
       <button class="btn-gh" onclick="abrirGerenciarTreinadores()">👥 Treinadores(as)</button>
       <button class="btn-gh" id="btnJornadaSucesso" style="display:none;" onclick="abrirEditorJornada(kbPerfilAtivo)">🎯 Jornada</button>
       <button class="btn-gh" id="btnAtribuirCarteira" style="display:none;" onclick="abrirAtribuirCarteira()">📋 Atribuir Carteira</button>
@@ -1637,7 +1639,7 @@ async function abrirCardPelaAgenda(cardId){
 // ── Adicionar card manualmente (sem passar pelo upload) ──
 // Usado pra leads/alunos que chegam fora da planilha original: indicação, walk-in,
 // ou enquanto não há integração automática com o sistema de gestão da academia.
-const CADENCIA_TOTAL_PADRAO_MANUAL={leads:9,rematricula:4,renovacao:4};
+const CADENCIA_TOTAL_PADRAO_MANUAL={leads:10,rematricula:4,renovacao:4,sucesso_cliente:6};
 // ── Gerenciar Treinadores(as), equipe técnica que recebe as experiências/consultorias ──
 function abrirGerenciarTreinadores(){
   renderListaTreinadores();
@@ -2206,7 +2208,7 @@ function closeM(id){document.getElementById(id).classList.remove('open');}
 
 // Repertório de scripts por tentativa, baseado nos blocos B.11 (leads/10x15),
 // B.13/B.14 (rematrícula) e B.17 (renovação) já validados na Central de Scripts.
-const SCRIPT_CADENCIA={
+const SCRIPT_CADENCIA_ANTIGA={
   leads:[
     {tipo:'Texto + Áudio · Primeiro Contato',texto:'Oi, {NOME}! Que alegria receber sua mensagem 🙌 Parabéns pela decisão, dar esse passo já mostra que você está levando sua saúde a sério. Aqui a gente trabalha diferente das academias convencionais: montamos um projeto personalizado pra cada aluno. Pra eu te ajudar melhor: qual sua idade, e você já está treinando atualmente?'},
     {tipo:'Direcionar p/ Ligação',texto:'Oi, {NOME}! Separei um presente de boas-vindas especial pra você e quero te explicar rapidinho como funciona nossa metodologia. Entendo a correria e quero valorizar seu tempo, consigo ligar rapidinho agora, ou prefere que eu ligue em outro horário? São só 2 a 3 minutinhos, garanto que vai valer a pena.'},
@@ -2236,6 +2238,18 @@ const SCRIPT_CADENCIA={
     {tipo:'Fechamento do ciclo',texto:'Muito obrigado(a) pelo seu tempo, {NOME}! Qualquer coisa que precisar, é só me chamar.'}
   ]
 };
+// Cadência do card vem da Biblioteca de scripts (ferramentas-academia.js): cada tentativa
+// tem a opção 1 (texto principal) e a opção 2 (opcao2). Se o arquivo não carregar, usa a antiga.
+const SCRIPT_CADENCIA=Object.assign({},SCRIPT_CADENCIA_ANTIGA,(window.FT_ACADEMIA&&FT_ACADEMIA.cadencia())||{});
+const FUNIL_POR_PERFIL={leads:'leads',rematricula:'ex',renovacao:'renov',sucesso_cliente:'suc'};
+function abrirScriptsKanban(){if(typeof abrirBibliotecaAcademia!=='function'){toast('Biblioteca de scripts não carregou.',true);return;}abrirBibliotecaAcademia({funil:FUNIL_POR_PERFIL[kbPerfilAtivo]||'leads'});}
+function blocoOpcao2(s,nome){
+  if(!s)return '';
+  const aq=s.aqui?`<div style="font-size:12px;color:var(--texto2);margin:-4px 0 12px;padding:8px 10px;border:1px dashed var(--borda);border-radius:8px"><b>AQÚI:</b> A ${s.aqui.a} · Q ${s.aqui.q} · Ú ${s.aqui.u} · I ${s.aqui.i}${s.op?`<br><b>Orientação:</b> ${s.op}`:''}</div>`:'';
+  const o2=s.opcao2?`<div class="at-script-box" style="background:var(--fundo2)"><div class="at-script-tipo">Opção 2 · ${s.opcao2.tipo} · ${s.opcao2.obj}</div><button class="at-copy-btn" onclick="copiarScriptOpcao2()">Copiar</button><div class="at-script-texto" id="scriptAtendimentoTexto2">${s.opcao2.texto.replaceAll('{NOME}',nome)}</div></div>`:'';
+  return aq+o2;
+}
+function copiarScriptOpcao2(){const el=document.getElementById('scriptAtendimentoTexto2');if(el)navigator.clipboard.writeText(el.innerText).then(()=>toast('Script copiado!'));}
 
 // ── MODO COMPROMISSO, etapas onde o card já tem um agendamento confirmado.
 // Aqui a cadência de prospecção para de contar; o script vira Confirmação ou
@@ -2413,6 +2427,7 @@ function renderCardModalBody(){
         <button class="at-copy-btn" onclick="copiarScriptAtendimento()">Copiar</button>
         <div class="at-script-texto" id="scriptAtendimentoTexto">${scriptTexto}</div>
       </div>
+      <div style="margin:-6px 0 14px"><button class="btn-gh" style="font-size:12px;padding:6px 12px" onclick="abrirBibliotecaAcademia&&abrirBibliotecaAcademia({funil:'exp',etapa:modoScriptCompromisso==='reconexao'?'faltou':'confirma'})">📚 Mais opções (funil Experiência → Matrícula)</button></div>
       ${interacaoHojeAtual?'<div style="font-size:12px;color:var(--verde);margin-bottom:10px">✓ Já tem registro de hoje pra esse card, marque o que mudou e salve de novo.</div>':''}
       <label class="fl" style="display:block;margin-bottom:8px">O que aconteceu?</label>
       <div class="at-checks">
@@ -2444,10 +2459,11 @@ function renderCardModalBody(){
     blocoAtendimento=`
       <div class="at-proxima"><b>Tentativa ${proximoIndice+1} de ${c.cadencia_total}</b> · ${scriptAtual.tipo}</div>
       <div class="at-script-box">
-        <div class="at-script-tipo">Script sugerido</div>
+        <div class="at-script-tipo">${scriptAtual.opcao2?'Opção 1 · '+(scriptAtual.obj||'Script sugerido'):'Script sugerido'}</div>
         <button class="at-copy-btn" onclick="copiarScriptAtendimento()">Copiar</button>
         <div class="at-script-texto" id="scriptAtendimentoTexto">${scriptAtual.texto.replaceAll('{NOME}',c.nome)}</div>
       </div>
+      ${blocoOpcao2(scriptAtual,c.nome)}
       ${interacaoHojeAtual?'<div style="font-size:12px;color:var(--verde);margin-bottom:10px">✓ Já tem registro de hoje pra esse card, marque o que mudou e salve de novo.</div>':''}
       <label class="fl" style="display:block;margin-bottom:8px">O que já aconteceu nesse contato? (marque quantos fizerem sentido)</label>
       <div class="at-checks">
@@ -3386,7 +3402,7 @@ function atualizarTotalCheck(){
   el.innerHTML=`Total distribuído: <b style="color:${bate?'var(--verde)':'var(--vermelho)'}">${somaTotal} / ${wiz.cardsProntos.length}</b>`;
 }
 
-const CADENCIA_TOTAL_PADRAO={leads:9,rematricula:4,renovacao:4};
+const CADENCIA_TOTAL_PADRAO={leads:10,rematricula:4,renovacao:4,sucesso_cliente:6};
 async function confirmarOndasECards(){
   const btn=event.target;btn.disabled=true;btn.textContent='Salvando...';
   try{

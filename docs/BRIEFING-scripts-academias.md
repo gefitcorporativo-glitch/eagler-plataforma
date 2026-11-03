@@ -49,3 +49,11 @@ Mais as **objeções** (preço, tempo, "vou pensar", "vou ver com marido/esposa"
 3. Construir `ferramentas-academia.js` + ligação no `campanhas.html` e no `index.html` da Eagler.
 4. Testar no navegador (Playwright com o Supabase simulado) e mostrar prints.
 5. Publicar só com aprovação. Depois: levar para a matriz (Academia Modelo) e registrar em `ROADMAP-modulos.md` (Registro de sincronização) na matriz.
+
+## Registro (03/11/2026): Eagler
+- Criado `ferramentas-academia.js` (genérico; nome, presente e cores em `ACADEMIA_CFG`). 6 funis, 6 perfis, ~85 toques, 18 objeções e Empilhar 3 Nãos. Scripts que a Eagler já usava ficaram preservados (marcados como atuais); os criados agora aparecem com a etiqueta "novo" até o Nelson validar.
+- Hub: a Central de Scripts AQÚI continua como está (formato de capítulo da UC, estudo). Novo botão ao lado, "💬 Biblioteca de scripts", abre a biblioteca por cima da página.
+- Campanhas: botão "📚 Scripts" no Kanban (abre no funil do perfil ativo) e o card mostra opção 1, opção 2 e AQÚI da tentativa. Cards novos: leads 10, rematrícula 4, renovação 4, sucesso do cliente 6.
+
+## Próximo momento (ideia aprovada, ainda não construir)
+- Área de **Estratégia** no Hub de cada academia: definir junto com o gestor os perfis de lead/aluno e os funis (etapas, número de contatos, descanso). A biblioteca passaria a ler essa configuração em vez de ter perfis e funis fixos no arquivo.
