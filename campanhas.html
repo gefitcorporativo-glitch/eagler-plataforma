@@ -156,8 +156,8 @@ table.map-table th{color:var(--laranja-t);font-size:11.5px;text-transform:upperc
 .carteiras-table td{padding:9px 12px;border-bottom:1px solid var(--borda);}
 .carteiras-table tfoot td{border-top:2px solid var(--borda);border-bottom:none;padding-top:12px;}
 .carteira-cell{display:inline-block;min-width:22px;text-align:center;padding:2px 6px;border-radius:6px;}
-.carteira-cell.clieaglerl{cursor:pointer;font-weight:700;}
-.carteira-cell.clieaglerl:hover{background:var(--fundo3);color:var(--laranja-t);}
+.carteira-cell.clicavel{cursor:pointer;font-weight:700;}
+.carteira-cell.clicavel:hover{background:var(--fundo3);color:var(--laranja-t);}
 .vd-filtros{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:22px;}
 .vd-filtros .fg{margin-bottom:0;}
 .vd-cons-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:26px;}
@@ -1168,7 +1168,7 @@ async function carregarCarteiras(){
               ${perfisAtivos.map(p=>{
                 const d=matriz[c.id][p];
                 return `<td>
-                  <span class="carteira-cell ${d.ativos>0?'clieaglerl':''}" ${d.ativos>0?`onclick="abrirRedistribuirDaMatriz('${p}','${c.id}',${JSON.stringify(campsAtivas.filter(cp=>(cp.perfis||[]).includes(p)).map(cp=>cp.id))})"`:''}>
+                  <span class="carteira-cell ${d.ativos>0?'clicavel':''}" ${d.ativos>0?`onclick="abrirRedistribuirDaMatriz('${p}','${c.id}',${JSON.stringify(campsAtivas.filter(cp=>(cp.perfis||[]).includes(p)).map(cp=>cp.id))})"`:''}>
                     ${d.ativos}
                   </span>
                   ${d.convertidos>0?`<span style="color:var(--verde);font-size:11px;"> · ${d.convertidos} conv.</span>`:''}

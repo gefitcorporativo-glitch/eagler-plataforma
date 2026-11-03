@@ -107,8 +107,8 @@ select.fi-sel:focus{outline:none;border-color:var(--or-t)}
 .pct-lbl{font-size:10px;color:var(--td);margin-top:3px;text-align:right}
 /* FUNIL CARDS */
 .funil-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:12px;margin-bottom:16px}
-.funil-painel-card-clieaglerl{transition:transform .15s,box-shadow .15s;}
-.funil-painel-card-clieaglerl:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.35);}
+.funil-painel-card-clicavel{transition:transform .15s,box-shadow .15s;}
+.funil-painel-card-clicavel:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.35);}
 .funil-card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
 .funil-header{padding:11px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px}
 .funil-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -343,6 +343,7 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
 
     <div class="nav-group-label">📈 Vendas</div>
     <div class="tab" data-tab="vendasmkt" onclick="switchTab('vendasmkt')">Vendas & Marketing</div>
+    <div class="tab" onclick="abrirCentralLeads()" title="Abre em nova aba, já logado">🎯 Central de Leads ↗</div>
     <div class="tab" data-tab="funis" onclick="switchTab('funis')">Funis & Indicadores</div>
     <div class="tab" data-tab="consultoras" onclick="switchTab('consultoras')">Equipe</div>
     <div class="tab" data-tab="relatorio" onclick="switchTab('relatorio')">Relatório</div>
@@ -354,7 +355,6 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
 
     <div class="nav-group-label">⚙️ Sistema</div>
     <div class="tab tab-admin" id="tab-admin" data-tab="admin" onclick="switchTab('admin')">⚡ Todas as Academias</div>
-    <div class="tab" data-tab="ferramentas" onclick="switchTab('ferramentas')" style="color:#15803d">🛠 Ferramentas & Scripts</div>
     <div class="tab" data-tab="ajuda" onclick="switchTab('ajuda')" style="color:var(--or-t)">❓ Ajuda</div>
   </div>
 
@@ -1530,6 +1530,10 @@ function abrirExperiencias(){
   if(!sessao||!sessao.id){toast('Faça login primeiro.',true);return;}
   window.location.href=`controle-experiencias.html?uid=${encodeURIComponent(sessao.id)}`;
 }
+function abrirCentralLeads(){
+  if(!sessao||!sessao.id){toast('Faça login primeiro.',true);return;}
+  window.open(`central-leads.html?uid=${encodeURIComponent(sessao.id)}`,'_blank');
+}
 function abrirAgendaUnificada(){
   if(!sessao||!sessao.id){toast('Faça login primeiro.',true);return;}
   window.location.href=`controle-experiencias.html?uid=${encodeURIComponent(sessao.id)}&tab=agenda`;
@@ -2308,14 +2312,14 @@ async function renderPainelFunis(){
     const pctBarVal=d.lista>0?Math.min(100,Math.round(d.convertidos/d.lista*100)):0;
 
     const perfilCampanha=FUNIL_PARA_PERFIL_CAMPANHA[f.id];
-    const clieaglerl=!!perfilCampanha;
-    return`<div ${clieaglerl?`onclick="abrirCampanhasNoPerfil('${perfilCampanha}')" style="cursor:pointer;"`:''} class="${clieaglerl?'funil-painel-card-clieaglerl':''}" style="background:var(--s1);border:1px solid var(--bd);border-left:3px solid ${f.cor};border-radius:10px;overflow:hidden;${clieaglerl?'cursor:pointer;':''}">
+    const clicavel=!!perfilCampanha;
+    return`<div ${clicavel?`onclick="abrirCampanhasNoPerfil('${perfilCampanha}')" style="cursor:pointer;"`:''} class="${clicavel?'funil-painel-card-clicavel':''}" style="background:var(--s1);border:1px solid var(--bd);border-left:3px solid ${f.cor};border-radius:10px;overflow:hidden;${clicavel?'cursor:pointer;':''}">
       <div style="padding:12px 14px 8px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between">
         <div style="display:flex;align-items:center;gap:7px">
           <div style="width:8px;height:8px;border-radius:50%;background:${f.cor}"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${f.cor}">${f.nome}</span>
         </div>
-        <div style="font-size:11px;color:var(--td)">${clieaglerl?'→ Ver no Campanhas':f.sub}</div>
+        <div style="font-size:11px;color:var(--td)">${clicavel?'→ Ver no Campanhas':f.sub}</div>
       </div>
       <div style="padding:14px;display:flex;align-items:flex-start;gap:4px;overflow-x:auto">
         ${stepsHtml}
