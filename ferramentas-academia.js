@@ -14,7 +14,7 @@ const CFG=Object.assign({
   nome:'Eagler Gym',
   presente:'o mapeamento completo da sua saúde + uma consultoria personalizada',
   avaliacao:'avaliação física tecnológica, onde você entende 15 áreas da sua saúde',
-  cor:'#D91E18',corT:'#A80F0A',escuro:'#111111',fundo:'#F8F6F6'
+  cor:'#D91E18',corT:'#A80F0A',corTexto:'#ffffff',escuro:'#111111',fundo:'#F8F6F6'
 },window.ACADEMIA_CFG||{});
 
 const PERFIS={
@@ -582,7 +582,7 @@ function copiarEl(id,ev){ev&&ev.stopPropagation();const t=document.getElementByI
   const ok=()=>{try{toast('Mensagem copiada!')}catch(e){}};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t.innerText).then(ok,ok);else ok();}
 
-const CSS=`#fa-ov{--fa-cor:${CFG.cor};--fa-cort:${CFG.corT};--fa-esc:${CFG.escuro};--fa-fundo:${CFG.fundo};--fa-s1:#fff;--fa-s2:#F1EDED;--fa-bd:rgba(26,26,26,.12);--fa-tx:#1A1A1A;--fa-td:rgba(26,26,26,.62);
+const CSS=`#fa-ov{--fa-cor:${CFG.cor};--fa-cort:${CFG.corT};--fa-ontx:${CFG.corTexto};--fa-esc:${CFG.escuro};--fa-fundo:${CFG.fundo};--fa-s1:#fff;--fa-s2:#F1EDED;--fa-bd:rgba(26,26,26,.12);--fa-tx:#1A1A1A;--fa-td:rgba(26,26,26,.62);
 position:fixed;inset:0;z-index:2000;background:rgba(10,10,10,.6);display:flex;justify-content:center;align-items:flex-start;padding:24px 16px;overflow-y:auto;font-family:inherit;color:var(--fa-tx)}
 #fa-ov *{box-sizing:border-box}
 #fa-box{width:100%;max-width:1100px;background:var(--fa-fundo);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
@@ -594,7 +594,7 @@ position:fixed;inset:0;z-index:2000;background:rgba(10,10,10,.6);display:flex;ju
 #fa-corpo{padding:18px 20px}
 #fa-ov .fa-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 #fa-ov .fa-on,#fa-ov .fa-off{font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;font-weight:600;font-family:inherit}
-#fa-ov .fa-on{background:var(--fa-cor);color:#fff;border:1px solid var(--fa-cor)}
+#fa-ov .fa-on{background:var(--fa-cor);color:var(--fa-ontx);border:1px solid var(--fa-cor)}
 #fa-ov .fa-off{background:var(--fa-s1);color:var(--fa-tx);border:1px solid var(--fa-bd)}
 #fa-ov .fa-off:hover{border-color:var(--fa-cor);color:var(--fa-cort)}
 #fa-ov .fa-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px}
@@ -614,7 +614,7 @@ position:fixed;inset:0;z-index:2000;background:rgba(10,10,10,.6);display:flex;ju
 #fa-ov .fa-det{padding:0 12px 14px}
 #fa-ov .fa-msg{position:relative;background:var(--fa-s2);border:1px solid var(--fa-bd);border-radius:8px;padding:12px 14px}
 #fa-ov .fa-txt{white-space:pre-line;font-size:13.5px;line-height:1.55;padding-right:70px}
-#fa-ov .fa-copiar{position:absolute;top:8px;right:8px;font-size:11px;padding:5px 11px;background:var(--fa-cor);color:#fff;border:0;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit}
+#fa-ov .fa-copiar{position:absolute;top:8px;right:8px;font-size:11px;padding:5px 11px;background:var(--fa-cor);color:var(--fa-ontx);border:0;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit}
 #fa-ov .fa-aqui{font-size:12px;color:var(--fa-td);padding:9px 11px;border:1px dashed var(--fa-bd);border-radius:8px;margin-top:10px}
 #fa-ov .fa-aqui b{color:var(--fa-tx)}
 #fa-ov .fa-op{font-size:12px;color:var(--fa-tx);margin-top:8px}
