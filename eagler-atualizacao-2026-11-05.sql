@@ -27,6 +27,7 @@ create table if not exists eagler_pessoas_testes (
   created_at timestamptz default now()
 );
 alter table eagler_pessoas_testes add column if not exists academia_id uuid;
+alter table eagler_pessoas_testes add column if not exists created_at timestamptz default now();
 update eagler_pessoas_testes set academia_id = 'e4a91c26-5b7d-4e08-9f13-6c2d8a4b7e51' where academia_id is null;
 create index if not exists eagler_pessoas_testes_academia_idx on eagler_pessoas_testes (academia_id, created_at desc);
 
@@ -37,6 +38,9 @@ create table if not exists eagler_nps_respostas (
   tipo text, contexto text, nota int, aluno_nome text,
   created_at timestamptz not null default now()
 );
+alter table eagler_nps_respostas add column if not exists academia_id uuid;
+alter table eagler_nps_respostas add column if not exists nota int;
+alter table eagler_nps_respostas add column if not exists created_at timestamptz not null default now();
 alter table eagler_nps_respostas add column if not exists tipo text;
 alter table eagler_nps_respostas add column if not exists contexto text;
 alter table eagler_nps_respostas add column if not exists aluno_nome text;
