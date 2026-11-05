@@ -344,6 +344,8 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
       <button class="btn-gh btn-sm" onclick="abrirCampanhas()" title="Abre em nova aba, já logado">📢 Campanhas</button>
       <button class="btn-gh btn-sm" onclick="abrirExperiencias()" title="Abre em nova aba, já logado">🎯 Experiências</button>
       <button class="btn-gh btn-sm" onclick="abrirAgendaUnificada()" title="Abre em nova aba, já logado">📅 Agenda</button>
+      <button class="btn-gh btn-sm" onclick="abrirHubPessoas()" title="Teste de perfil do candidato e painel do gestor">👥 Hub de Pessoas</button>
+      <button class="btn-gh btn-sm" onclick="copiarLinkNps()" title="Link da pesquisa de satisfação para enviar aos alunos">⭐ Link do NPS</button>
       <button class="btn-gh btn-sm" id="btn-tv" onclick="toggleTV()" title="Modo apresentação em tela cheia">📺 TV</button>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
@@ -4955,6 +4957,25 @@ function openM(id){
   document.getElementById(id).classList.add('open');
 }
 function closeM(id){document.getElementById(id).classList.remove('open')}
+
+// Hub de Pessoas e NPS: páginas avulsas, recebem a academia por ?a=
+function acAtual(){return (typeof isAdmin==='function'&&isAdmin()&&acId)?acId:(sessao&&sessao.academia_id)}
+function linkDaAcademia(arq){
+  const base=location.href.split('#')[0].split('?')[0].replace(/[^\/]*$/,'');
+  const a=acAtual();
+  return base+arq+(a?'?a='+encodeURIComponent(a):'');
+}
+function abrirHubPessoas(){
+  if(!acAtual()){toast('Selecione uma academia no seletor acima.',true);return}
+  try{sessionStorage.setItem('qg90_sessao_roi',JSON.stringify(sessao))}catch(e){}
+  window.open(linkDaAcademia('pessoas.html'),'_blank');
+}
+function copiarLinkNps(){
+  if(!acAtual()){toast('Selecione uma academia no seletor acima.',true);return}
+  const l=linkDaAcademia('nps.html');
+  if(navigator.clipboard)navigator.clipboard.writeText(l).then(()=>toast('Link do NPS copiado!')).catch(()=>prompt('Copie o link:',l));
+  else prompt('Copie o link:',l);
+}
 
 // ══ ÁREA DO TREINADOR (Retenção) ══
 // O sistema de Retenção usa outro projeto Supabase, com login próprio (Supabase Auth).
