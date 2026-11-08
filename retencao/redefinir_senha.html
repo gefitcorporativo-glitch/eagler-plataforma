@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#0A0A0A; --card:#111111; --border:#1E1E1E; --border2:#2A2A2A;
-  --orange:#D91E18; --text:#F0F0F0; --muted:#666; --dim:#333;
+  --orange:#F0443D; --text:#F0F0F0; --muted:#666; --dim:#333;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;
@@ -25,7 +25,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .field input{background:#111;border:1px solid var(--border2);border-radius:10px;padding:12px 14px;color:var(--text);
   font-size:14px;outline:none;font-family:'Barlow',sans-serif}
 .field input:focus{border-color:var(--orange)}
-.btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#D91E18,#FF5A52);
+.btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#F0443D,#FF5A52);
   color:#000;font-size:15px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
 .btn:disabled{background:var(--dim);color:var(--muted);cursor:default}
 .msg{padding:10px 14px;border-radius:8px;font-size:13px;margin-top:14px;line-height:1.5;display:none}
@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const sb = window.supabase.createClient(APP_CONFIG.SUPABASE_URL, APP_CONFIG.SUPABASE_ANON);
+const sb = window.supabase.createClient(APP_CONFIG.SUPABASE_URL, APP_CONFIG.SUPABASE_ANON, window.gfOpcoesAuth);
 let pronto = false;
 
 function erro(msg){ const e=document.getElementById('msgErro'); e.textContent=msg; e.classList.add('show'); }
