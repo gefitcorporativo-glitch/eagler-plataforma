@@ -15,10 +15,10 @@
   --card2: #161626;
   --border: rgba(255,255,255,.06);
   --border2: rgba(255,255,255,.1);
-  --orange: #D91E18;
+  --orange: #F0443D;
   --orange2: #FF5A52;
-  --orange-dim: rgba(217,30,24,.1);
-  --orange-glow: rgba(217,30,24,.25);
+  --orange-dim: rgba(240,68,61,.1);
+  --orange-glow: rgba(240,68,61,.25);
   --text: #F0EEF8;
   --text2: #9896B0;
   --text3: #4A4860;
@@ -532,7 +532,7 @@ body::before {
           stroke-dashoffset="276.5"/>
         <defs>
           <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#D91E18"/>
+            <stop offset="0%" stop-color="#F0443D"/>
             <stop offset="100%" stop-color="#FF5A52"/>
           </linearGradient>
         </defs>
@@ -974,7 +974,7 @@ body::before {
       <button onclick="document.getElementById('modalNovoMembro').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px">✕</button>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button id="tipoTreinadorBtn" onclick="setTipoMembro('treinador')" style="flex:1;padding:9px;border-radius:8px;border:1px solid var(--orange-border,rgba(217,30,24,.4));background:var(--orange-dim,rgba(217,30,24,.12));color:var(--orange);font-size:12px;font-weight:700;cursor:pointer">🏋️ Treinador(a)</button>
+      <button id="tipoTreinadorBtn" onclick="setTipoMembro('treinador')" style="flex:1;padding:9px;border-radius:8px;border:1px solid var(--orange-border,rgba(240,68,61,.4));background:var(--orange-dim,rgba(240,68,61,.12));color:var(--orange);font-size:12px;font-weight:700;cursor:pointer">🏋️ Treinador(a)</button>
       <button id="tipoConsultorBtn" onclick="setTipoMembro('consultor')" style="flex:1;padding:9px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-weight:700;cursor:pointer">💬 Consultor(a)</button>
     </div>
     <input type="hidden" id="nmTipo" value="treinador">
@@ -1098,7 +1098,7 @@ function setTipoMembro(tipo){
   const btnC = document.getElementById('tipoConsultorBtn');
   const wrap = document.getElementById('nmTipoTreinadorWrap');
   if(tipo==='treinador'){
-    btnT.style.background='var(--orange-dim,rgba(217,30,24,.12))'; btnT.style.color='var(--orange)'; btnT.style.borderColor='var(--orange-border,rgba(217,30,24,.4))';
+    btnT.style.background='var(--orange-dim,rgba(240,68,61,.12))'; btnT.style.color='var(--orange)'; btnT.style.borderColor='var(--orange-border,rgba(240,68,61,.4))';
     btnC.style.background='transparent'; btnC.style.color='var(--text3)'; btnC.style.borderColor='var(--border2)';
     wrap.style.display = 'flex';
   } else {
@@ -1159,7 +1159,7 @@ async function confirmarResetSenhaEquipe(){
 }
 
 // Cores fixas para diferenciar treinadores nos gráficos
-const CORES_TREINADOR = ['#D91E18','#7EB8FF','#2DD4A0','#B09FFF','#FFD166','#FF4D6D','#FF5A52','#9AF0D0'];
+const CORES_TREINADOR = ['#F0443D','#7EB8FF','#2DD4A0','#B09FFF','#FFD166','#FF4D6D','#FF5A52','#9AF0D0'];
 
 function diasEntre(a, b){ return Math.floor((b-a)/(1000*60*60*24)); }
 function mesAtualISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
@@ -1172,7 +1172,7 @@ function inicioSemana(){
 
 async function carregarDadosReais(){
   try {
-    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, window.gfOpcoesAuth);
 
     // ── MODO ADMIN: acesso direto vindo do painel admin, sem login ──
     const urlParams = new URLSearchParams(window.location.search);
@@ -1205,6 +1205,7 @@ async function carregarDadosReais(){
     academiaId = gestor.academia_id;
 
     const { data: academia } = await sb.from('academias').select('nome').eq('id', academiaId).single();
+    if(!(await gfConfereAcademia(sb, academia?.nome))) return;
     academiaNome = academia?.nome || 'Academia';
     document.getElementById('academiaNome').textContent = academiaNome;
     document.getElementById('academiaLogoLetter').textContent = academiaNome.charAt(0).toUpperCase();
@@ -1612,7 +1613,7 @@ function renderEngajamentoChart(){
   const missoes =  [42, 48, 52, 55, 53, 58, 62, 60];
   const notaDia =  [30, 35, 40, 45, 42, 50, 55, 53];
   const series = [
-    {data:treinos, color:'#D91E18', label:'Treinos'},
+    {data:treinos, color:'#F0443D', label:'Treinos'},
     {data:missoes, color:'#7EB8FF', label:'Missões'},
     {data:notaDia, color:'#B09FFF', label:'Nota do dia'},
   ];
@@ -1806,7 +1807,7 @@ function renderEvolucaoChart(){
     });
   };
 
-  drawLine(ativos, '#D91E18', false);
+  drawLine(ativos, '#F0443D', false);
   drawLine(comTreinador, '#2DD4A0', false);
 }
 

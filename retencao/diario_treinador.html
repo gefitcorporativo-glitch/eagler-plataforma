@@ -13,9 +13,9 @@
   --card2: #1A1A1A;
   --border: #1E1E1E;
   --border2: #2A2A2A;
-  --orange: #D91E18;
-  --orange-dim: rgba(217,30,24,.1);
-  --orange-border: rgba(217,30,24,.25);
+  --orange: #F0443D;
+  --orange-dim: rgba(240,68,61,.1);
+  --orange-border: rgba(240,68,61,.25);
   --text: #F0F0F0;
   --muted: #555;
   --dim: #222;
@@ -492,7 +492,7 @@ let historico = [];
 
 // ── INIT ─────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, window.gfOpcoesAuth);
 
   // Verificar sessão
   const { data: { session } } = await sb.auth.getSession();
@@ -707,7 +707,7 @@ function renderResumoSemanal(){
 function renderHistorico(){
   const cores = {
     exp: '#EAB308', novos: '#22C55E', cart: '#60A5FA',
-    revP: '#555', revR: '#22C55E', cons: '#A78BFA', aval: '#D91E18'
+    revP: '#555', revR: '#22C55E', cons: '#A78BFA', aval: '#F0443D'
   };
 
   return `
@@ -727,7 +727,7 @@ function renderHistorico(){
             {v:h.novos_alunos||0,          c:'#22C55E', t:'Nov'},
             {v:h.revisoes_realizadas||0,   c:'#60A5FA', t:'Rev'},
             {v:h.consultorias_realizadas||0,c:'#A78BFA',t:'Con'},
-            {v:h.avaliacoes_realizadas||0, c:'#D91E18', t:'Ava'},
+            {v:h.avaliacoes_realizadas||0, c:'#F0443D', t:'Ava'},
           ].filter(x=>x.v>0);
           return `<div class="historico-row" onclick="irParaData('${h.data}')">
             <div class="hist-data">${label}</div>

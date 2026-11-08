@@ -9,7 +9,7 @@
 <style>
 :root {
   --bg:#0A0A0A; --card:#111111; --border:#1E1E1E; --border2:#2A2A2A;
-  --orange:#D91E18; --orange-dim:rgba(217,30,24,.12); --orange-border:rgba(217,30,24,.28);
+  --orange:#F0443D; --orange-dim:rgba(240,68,61,.12); --orange-border:rgba(240,68,61,.28);
   --text:#F0F0F0; --muted:#666; --dim:#333;
   --green:#22C55E; --red:#EF4444;
 }
@@ -69,7 +69,7 @@ body{
 /* ── BUTTON ── */
 .btn-login{
   width:100%;padding:14px;border-radius:12px;border:none;
-  background:linear-gradient(135deg,#D91E18,#FF5A52);
+  background:linear-gradient(135deg,#F0443D,#FF5A52);
   color:#000;font-size:15px;font-weight:800;cursor:pointer;
   font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;
   transition:opacity .2s;margin-top:4px;
@@ -210,7 +210,7 @@ if(window.top!==window.self){window.top.location.href=window.location.href;}
 // ── CONFIGURAÇÃO SUPABASE ────────────────────────────────────
 const SUPABASE_URL  = APP_CONFIG.SUPABASE_URL;
 const SUPABASE_ANON = APP_CONFIG.SUPABASE_ANON;
-const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, window.gfOpcoesAuth);
 
 // ── STATE ────────────────────────────────────────────────────
 let selectedRole = 'treinador';

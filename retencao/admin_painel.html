@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#0A0A0A;--card:#111111;--card2:#1A1A1A;--border:#1E1E1E;--border2:#2A2A2A;
-  --orange:#D91E18;--orange-dim:rgba(217,30,24,.12);--orange-border:rgba(217,30,24,.28);
+  --orange:#F0443D;--orange-dim:rgba(240,68,61,.12);--orange-border:rgba(240,68,61,.28);
   --text:#F0F0F0;--muted:#666;--dim:#2A2A2A;
   --green:#22C55E;--green-dim:rgba(34,197,94,.1);--green-border:rgba(34,197,94,.25);
   --red:#EF4444;--red-dim:rgba(239,68,68,.1);
@@ -284,7 +284,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
         <button class="filter-btn" onclick="filtroAlunoVinculo('agregador',this)">🔗 Agregador</button>
         <button class="filter-btn active" onclick="filtroAlunoVinculo('todos',this)" id="btnVincTodos">Todos vínculos</button>
       </div>
-      <div id="barraReatribuir" style="display:none;align-items:center;gap:12px;background:var(--orange-dim,rgba(217,30,24,.1));border:1px solid var(--orange-border,rgba(217,30,24,.3));border-radius:10px;padding:10px 16px;margin-bottom:12px">
+      <div id="barraReatribuir" style="display:none;align-items:center;gap:12px;background:var(--orange-dim,rgba(240,68,61,.1));border:1px solid var(--orange-border,rgba(240,68,61,.3));border-radius:10px;padding:10px 16px;margin-bottom:12px">
         <span style="font-size:13px;font-weight:700;color:var(--orange)"><span id="qtdSelecionados">0</span> aluno(s) selecionado(s)</span>
         <select id="selTreinadorDestino" style="flex:1;max-width:280px;background:#111;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:13px"></select>
         <button class="btn-action" style="background:var(--orange);color:#000;font-weight:700" onclick="reatribuirSelecionados()">Reatribuir carteira</button>
@@ -735,7 +735,7 @@ let filtroAlunoStatusAtual = 'todos';
 
 // ── LOGIN ─────────────────────────────────────────────────────
 function getSb(){
-  if(!sb) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  if(!sb) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, window.gfOpcoesAuth);
   return sb;
 }
 
@@ -1570,7 +1570,7 @@ function renderModulosList(){
     const ativo = mmModulosAtual.includes(m.key);
     const faseColors = {1:'var(--yellow)',2:'var(--blue)',3:'var(--green)'};
     return `
-      <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:${ativo?'rgba(217,30,24,.08)':'var(--card2)'};border:1px solid ${ativo?'var(--orange-border)':'var(--border)'};border-radius:8px;cursor:pointer;transition:all .15s" onclick="toggleModulo('${m.key}')">
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:${ativo?'rgba(240,68,61,.08)':'var(--card2)'};border:1px solid ${ativo?'var(--orange-border)':'var(--border)'};border-radius:8px;cursor:pointer;transition:all .15s" onclick="toggleModulo('${m.key}')">
         <div style="flex:1">
           <div style="font-size:13px;font-weight:600;color:${ativo?'var(--text)':'var(--muted)'}">${m.label}</div>
           <div style="font-size:11px;color:var(--muted);margin-top:2px">${m.desc} · <span style="color:${faseColors[m.fase]}">Fase ${m.fase}</span></div>

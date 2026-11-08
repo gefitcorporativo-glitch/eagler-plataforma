@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#0A0A0A;--card:#111111;--card2:#1A1A1A;--border:#1E1E1E;--border2:#2A2A2A;
-  --orange:#D91E18;--orange-dim:rgba(217,30,24,.1);--orange-border:rgba(217,30,24,.25);
+  --orange:#F0443D;--orange-dim:rgba(240,68,61,.1);--orange-border:rgba(240,68,61,.25);
   --text:#F0F0F0;--muted:#555;--dim:#222;
   --green:#22C55E;--green-dim:rgba(34,197,94,.1);--green-border:rgba(34,197,94,.25);
   --red:#EF4444;--red-dim:rgba(239,68,68,.1);
@@ -181,7 +181,7 @@ const PERGUNTAS = [
 ];
 
 window.addEventListener('DOMContentLoaded', async () => {
-  sb = window.supabase.createClient(SB_URL, SB_ANON);
+  sb = window.supabase.createClient(SB_URL, SB_ANON, window.gfOpcoesAuth);
 
   // Verificar sessão
   const { data:{ session } } = await sb.auth.getSession();

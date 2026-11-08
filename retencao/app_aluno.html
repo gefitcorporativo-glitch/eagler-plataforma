@@ -16,7 +16,7 @@
 <style>
 :root{
   --bg:#0A0A0A;--card:#111111;--card2:#1A1A1A;--border:#1E1E1E;--border2:#2A2A2A;
-  --accent:#D91E18;--accent-dim:rgba(217,30,24,.12);--accent-border:rgba(217,30,24,.28);
+  --accent:#F0443D;--accent-dim:rgba(240,68,61,.12);--accent-border:rgba(240,68,61,.28);
   --text:#F0F0F0;--muted:#666;--dim:#2A2A2A;
   --green:#22C55E;--green-dim:rgba(34,197,94,.1);
   --red:#EF4444;--red-dim:rgba(239,68,68,.1);
@@ -418,15 +418,15 @@ let estrelas = 0;
 
 // ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, window.gfOpcoesAuth);
 
   // Pegar planner ID da URL
   const params = new URLSearchParams(window.location.search);
   let plannerId = params.get('planner');
   // lembra o planner neste celular: quem abrir pelo ícone da tela inicial cai direto no desafio
   try{
-    if(plannerId) localStorage.setItem('pf_planner_id', plannerId);
-    else plannerId = localStorage.getItem('pf_planner_id');
+    if(plannerId) localStorage.setItem('planner_'+(APP_CONFIG.STORAGE_KEY||''), plannerId);
+    else plannerId = localStorage.getItem('planner_'+(APP_CONFIG.STORAGE_KEY||''));
   }catch(e){}
   if(plannerId) prepararManifest(plannerId);
 
