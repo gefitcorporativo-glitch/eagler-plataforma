@@ -724,8 +724,8 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
   <div class="p-header">
     <div class="p-header-inner">
       <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-        <div class="p-logo" id="logoBox" onclick="document.getElementById('logoUpload').click()" title="Clique para enviar logo">
-          <img class="gf-logo" src="logo-eagler.png" alt="Eagler Gym" style="height:28px"><span id="logoLetter" style="display:none">P</span>
+        <div class="p-logo" id="logoBox" onclick="document.getElementById('logoUpload').click()" title="Clique para enviar logo" style="background:transparent">
+          <img class="gf-logo" src="icone-aguia.png" alt="Eagler Gym" style="width:30px;height:30px;object-fit:contain"><span id="logoLetter" style="display:none">P</span>
           <input type="file" id="logoUpload" accept="image/*" style="display:none" onchange="loadLogo(this)">
         </div>
         <div>
@@ -1694,6 +1694,7 @@ function canAdvance(){
 
 function navigate(dir){
   const next=pState.step+dir;
+  if(dir<0&&pState.step===0){ voltarInicio(); return; }
   if(dir>0&&!canAdvance())return;
   if(next<0||next>=STEPS_NAMES.length)return;
   pState.step=next; updateAll();
@@ -1713,7 +1714,8 @@ function updateAll(){
 function updateNav(){
   const prev=document.getElementById('btnPrev');
   const next=document.getElementById('btnNext');
-  prev.disabled=pState.step===0;
+  prev.disabled=false;
+  prev.textContent=pState.step===0?(currentAcademiaId?'← Voltar ao início':'← Voltar ao Hub'):'← Anterior';
   document.getElementById('navStepName').textContent=STEPS_NAMES[pState.step];
   document.getElementById('navStepNum').textContent=`${pState.step+1} de ${STEPS_NAMES.length}`;
   const can=canAdvance(); const isLast=pState.step===STEPS_NAMES.length-1;
@@ -2515,7 +2517,7 @@ async function carregarDadosHome(){
     const { data: planners } = await sbSys
       .from('planners')
       .select('*, alunos(nome, matricula)')
-      .eq('treinador_resp_id', treinadorId)
+      .eq(treinadorId ? 'treinador_resp_id' : 'academia_id', treinadorId || currentAcademiaId)
       .order('criado_em', {ascending: false});
 
     const listaPlanners = planners || [];
@@ -2543,7 +2545,7 @@ async function carregarDadosHome(){
       .from('experiencias')
       .select('*')
       .eq('academia_id', currentAcademiaId)
-      .eq('treinador_id', treinadorId)
+      .eq(treinadorId ? 'treinador_id' : 'academia_id', treinadorId || currentAcademiaId)
       .order('data_inicio', {ascending: false});
 
     const listaExps = exps || [];
@@ -2713,7 +2715,7 @@ function switchHTab(tab, btn){
 
 async function carregarAgenda(treinadorId, meusAlunos){
   const wrap = document.getElementById('agendaWrap');
-  if(!treinadorId){ wrap.innerHTML = '<div class="home-empty">Treinador não identificado.</div>'; return; }
+  if(!treinadorId){ wrap.innerHTML = '<div class="home-empty">A agenda é de cada treinador(a). Na visão do gestor, acompanhe pela aba 📋 Planners.</div>'; return; }
   try {
     const { data: exps } = await sbSys.from('experiencias').select('*')
       .eq('academia_id', currentAcademiaId).eq('treinador_id', treinadorId)
@@ -2955,6 +2957,28 @@ function mostrarBannerModoAdmin(){
   document.body.insertBefore(b, document.body.firstChild);
 }
 
+// ── VOLTAR AO INÍCIO (etapa 1 do planner) ─────────────────────
+function voltarInicio(){
+  if(currentAcademiaId){ mostrarHome(); window.scrollTo({top:0}); return; }
+  window.location.href = '../index.html';
+}
+
+// ── VISÃO DO GESTOR ───────────────────────────────────────────
+let visaoGestor = false;
+function ativarVisaoGestor(){
+  visaoGestor = true;
+  const b = document.createElement('div');
+  b.id = 'faixaGestor';
+  b.style.cssText = 'position:sticky;top:0;z-index:200;background:var(--orange-dim);border-bottom:2px solid var(--orange);color:var(--orange);font-size:12.5px;font-weight:700;padding:8px 16px;text-align:center;font-family:"Barlow",sans-serif';
+  b.innerHTML = '👔 Visão do gestor: planners de todos os treinadores da academia. Para criar um planner, escolha o treinador responsável na etapa 1.';
+  document.body.insertBefore(b, document.body.firstChild);
+  const sub = document.getElementById('homeNomeTreinador'); if(sub && sub.nextElementSibling) sub.nextElementSibling.textContent = 'Planners e indicadores de toda a equipe técnica.';
+  // agenda e "+ Aluno" são de cada treinador
+  document.querySelectorAll('button[onclick="abrirModalAddAluno()"],button[onclick="abrirModalAgendar()"]').forEach(x => x.style.display = 'none');
+  const ba = [...document.querySelectorAll('.h-itab-btn')].find(x => (x.getAttribute('onclick')||'').includes("'agenda'"));
+  if(ba) ba.style.display = 'none';
+}
+
 function fazerLogout(){
   if(modoAdmin){ window.close(); return; }
   if(sbSys) sbSys.auth.signOut();
@@ -3065,6 +3089,30 @@ async function initComSupabase(){
       esconderLoading();
       await carregarDadosHome();
 
+      return;
+    }
+
+    // 3. Não é treinador: se for gestor(a) da academia, abre a VISÃO DO GESTOR
+    const { data: gestorRet } = await sbSys
+      .from('gestores')
+      .select('id, nome, academia_id')
+      .eq('user_id', currentUser.id)
+      .maybeSingle();
+    if(gestorRet){
+      currentAcademiaId = gestorRet.academia_id;
+      localStorage.setItem('qg90_treinador', JSON.stringify({ id: null, nome: gestorRet.nome, academia_id: gestorRet.academia_id, tipo: 'gestor' }));
+      await carregarTreinadores(gestorRet.academia_id);
+      await carregarAcademia(gestorRet.academia_id);
+      initPlanner();
+      if(window.TREINADORES_DB && window.TREINADORES_DB.length > 0) populateTreinadoresDB(window.TREINADORES_DB);
+      ativarVisaoGestor();
+      document.getElementById('planner-view').classList.remove('active');
+      document.getElementById('home-view').classList.add('active');
+      document.getElementById('btnHomeFixed').classList.remove('visible');
+      esconderLoading();
+      await carregarDadosHome();
+      const bp = [...document.querySelectorAll('.h-itab-btn')].find(b => (b.getAttribute('onclick')||'').includes("'planners'"));
+      if(bp){ switchHTab('planners', bp); carregarListaPlanners(); }
       return;
     }
   } catch(err){
