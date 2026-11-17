@@ -678,7 +678,7 @@ async function doLogin(){
     }
     // admin (master Eagler Gym) sempre tem acesso; demais precisam ter 'campanhas' liberado
     if(res[0].role!=='admin' && !(res[0].modulos_ativos||[]).includes('campanhas')){
-      err.textContent='Este módulo ainda não foi liberado para sua academia. Fale com o suporte GeFit.';err.classList.add('show');
+      err.textContent='Este módulo ainda não foi liberado para sua academia. Fale com o suporte da plataforma.';err.classList.add('show');
       btn.disabled=false;btn.textContent='Entrar';return;
     }
     sessionStorage.setItem('qg90_sessao',JSON.stringify(res[0]));
