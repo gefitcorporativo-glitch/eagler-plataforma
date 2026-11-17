@@ -192,6 +192,8 @@ alter table eagler_campanhas add column if not exists perfis jsonb;
 alter table eagler_campanhas add column if not exists config_renovacao jsonb;
 alter table eagler_campanhas add column if not exists config_sucesso jsonb;
 alter table eagler_campanhas add column if not exists investimento_trafego numeric;
+alter table eagler_campanhas add column if not exists prazo_primeiras_dias int;
+alter table eagler_campanhas add column if not exists prazo_primeiras_data text;
 alter table eagler_campanhas add column if not exists created_at bigint;
 alter table eagler_campanhas add column if not exists updated_at bigint;
 
