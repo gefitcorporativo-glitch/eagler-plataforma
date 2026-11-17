@@ -171,7 +171,7 @@ tr:last-child td{border-bottom:none}
     <div class="login-hero">
       <div class="login-icon">🏋️</div>
       <div class="login-title">Atualizar carteira de alunos</div>
-      <div class="login-sub">Importe a lista do seu sistema de gestão e atualize o GeFit com um clique. Rápido, seguro e sem precisar de TI.</div>
+      <div class="login-sub">Importe a lista do seu sistema de gestão e atualize a plataforma com um clique. Rápido, seguro e sem precisar de TI.</div>
     </div>
     <div class="login-card">
       <div class="field">
@@ -186,7 +186,7 @@ tr:last-child td{border-bottom:none}
       <div id="loginErro" style="display:none;margin-top:10px;text-align:center;font-size:12px;color:var(--red)"></div>
     </div>
     <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px">
-      Credenciais fornecidas pela equipe GeFit · <a href="mailto:suporte@gefit.com.br" style="color:var(--orange)">suporte@gefit.com.br</a>
+      Credenciais fornecidas pelo gestor da academia
     </div>
   </div>
 
@@ -257,7 +257,7 @@ tr:last-child td{border-bottom:none}
 
       <div id="planoMapWrap" style="display:none" class="card">
         <div class="card-title">Equivalência de planos</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Valores encontrados → padrão GeFit:</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Valores encontrados → padrão do sistema:</div>
         <div id="planoChips"></div>
       </div>
 
@@ -327,7 +327,7 @@ tr:last-child td{border-bottom:none}
     <!-- ── STEP 4: IMPORTANDO ── -->
     <div class="sec" id="step4">
       <div class="card">
-        <div class="card-title">Importando para o GeFit</div>
+        <div class="card-title">Importando para a plataforma</div>
         <div class="progress-steps" id="progSteps">
           <div class="prog-step idle" id="prog1"><span class="prog-icon">🔐</span> Verificando credenciais...</div>
           <div class="prog-step idle" id="prog2"><span class="prog-icon">🔍</span> Verificando alunos existentes...</div>
@@ -343,7 +343,7 @@ tr:last-child td{border-bottom:none}
       <div class="success-screen">
         <div class="success-icon">🎉</div>
         <div class="success-title">Carteira atualizada!</div>
-        <div class="success-sub" id="successSub">Alunos importados com sucesso para o sistema GeFit.</div>
+        <div class="success-sub" id="successSub">Alunos importados com sucesso para a plataforma.</div>
         <div class="success-stats" id="successStats"></div>
         <button class="btn-primary" onclick="novaImportacao()" style="margin-bottom:10px">📂 Importar outro arquivo</button>
         <button class="btn-sec" onclick="window.location.href='sistema_integrado_v3.html'">← Ir para o sistema</button>
@@ -462,7 +462,7 @@ async function loginSucesso(user){
     if(g){ perfil=g; tipo='gestor'; treinadorId=g.id; }
   }
 
-  if(!perfil){ showErr('Perfil não encontrado. Verifique suas credenciais com a equipe GeFit.'); return; }
+  if(!perfil){ showErr('Perfil não encontrado. Verifique suas credenciais com o suporte.'); return; }
 
   academiaId = perfil.academia_id;
 

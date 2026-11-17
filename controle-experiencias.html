@@ -587,7 +587,7 @@ async function doLogin(){
 
     const modulos = data.modulos_ativos || [];
     if(!modulos.includes('experiencias')){
-      errEl.textContent = "Este módulo ainda não foi liberado para sua academia. Fale com o suporte GeFit.";
+      errEl.textContent = "Este módulo ainda não foi liberado para sua academia. Fale com o suporte da plataforma.";
       errEl.style.display='block';
       return;
     }
@@ -670,7 +670,7 @@ async function tentarLoginAutomatico(){
 
     const modulos = data.modulos_ativos || [];
     if(!modulos.includes('experiencias')){
-      document.getElementById('loginError').textContent = "Este módulo ainda não foi liberado para sua academia. Fale com o suporte GeFit.";
+      document.getElementById('loginError').textContent = "Este módulo ainda não foi liberado para sua academia. Fale com o suporte da plataforma.";
       document.getElementById('loginError').style.display='block';
       return false;
     }
@@ -772,7 +772,7 @@ async function loadExperiencias(){
       // academia_id estar vazio, o que poderia acontecer por engano em qualquer conta.
     }else{
       experiencias = [];
-      showToast("Sua conta não está vinculada a nenhuma academia. Fale com o suporte GeFit.");
+      showToast("Sua conta não está vinculada a nenhuma academia. Fale com o suporte da plataforma.");
       console.error('SEGURANÇA: usuário sem academia_id e sem role admin tentou carregar experiências, acesso bloqueado.', currentUser);
       return;
     }

@@ -168,8 +168,8 @@ const steps = [
       ['Tela principal','painel_vendas.html'],
       ['O que faz','Agenda experiências, faz follow-up, acompanha conversão de leads']
     ]},
-    {type:'fill', title:'Admin (GeFit — você)', rows:[
-      ['Quem usa','Equipe GeFit, dona da plataforma'],
+    {type:'fill', title:'Admin (suporte da plataforma)', rows:[
+      ['Quem usa','Suporte da plataforma'],
       ['Tela principal','admin_painel.html (login fixo, fora do login unificado)'],
       ['O que faz','Cria e gerencia todas as academias-clientes, cria usuários, acessa qualquer conta ao vivo sem senha']
     ]},
@@ -340,7 +340,7 @@ const steps = [
   sub:"A tela que abre ao logar como gestor(a)",
   badge:"mod-gestor",
   blocks:[
-    {type:'expect', title:'Bloco 1 — Academia', text:'Alunos Ativos, Com Treinador+Planner (vinculados ao método), Novos no mês, Índice de Vinculação (% no método GeFit, meta 70%).'},
+    {type:'expect', title:'Bloco 1 — Academia', text:'Alunos Ativos, Com Treinador+Planner (vinculados ao método), Novos no mês, Índice de Vinculação (% no método, meta 70%).'},
     {type:'expect', title:'Bloco 2 — KPIs do Depto. Técnico', text:'Consultorias, Revisões (semana), Experiências (mês) — todos com dado real. Ativos no App, Alunos em Risco e Índice de Engajamento ainda aparecem marcados <strong>🟡 modelo</strong> — sem fonte de dado real conectada ainda.'},
     {type:'warn', title:'Seletor de período (Semana/Mês/Trim.)', text:'Ainda não filtra os dados de verdade — Consultorias e Experiências sempre mostram o mês corrente, Revisões sempre a semana corrente.'}
   ]
@@ -384,7 +384,7 @@ const steps = [
   ]
 },
 {
-  grupo:"Admin (GeFit)",
+  grupo:"Admin (suporte)",
   eyebrow:"Gestão de clientes",
   title:"Academias",
   sub:"Criar, editar, inativar e acessar qualquer academia-cliente",
@@ -402,7 +402,7 @@ const steps = [
   ]
 },
 {
-  grupo:"Admin (GeFit)",
+  grupo:"Admin (suporte)",
   eyebrow:"Pessoas",
   title:"Usuários e Acessos",
   sub:"Criar login, redefinir senha, e entrar como qualquer pessoa",
@@ -418,7 +418,7 @@ const steps = [
   ]
 },
 {
-  grupo:"Admin (GeFit)",
+  grupo:"Admin (suporte)",
   eyebrow:"Dados em massa",
   title:"Importação de Planilha",
   sub:"Subir a carteira inteira de uma academia de uma vez",
@@ -469,7 +469,7 @@ const steps = [
     {type:'warn', title:'"O botão Acessar do admin não funciona"', text:'Confirme que o link tem <code>?admin_academia=...</code> na URL — sem isso, a tela pede login normal.'},
     {type:'warn', title:'"Os números do Diário não batem com a Agenda"', text:'Os dois ainda não são sincronizados — o Diário é contador manual do dia, a Agenda é compromisso individual por aluno. Preencha os dois com atenção.'},
     {type:'tip', title:'Indicadores marcados 🟡', text:'Sempre que você vir a etiqueta 🟡 "modelo" numa tela, significa que aquele número ainda é estimado ou ilustrativo — não existe uma fonte de dado real conectada por trás dele ainda.'},
-    {type:'tip', title:'Ainda com dúvida?', text:'Fale com o suporte GeFit.'}
+    {type:'tip', title:'Ainda com dúvida?', text:'Fale com o suporte da plataforma.'}
   ]
 }
 ];

@@ -1349,7 +1349,7 @@ async function carregarDadosAcademia(){
       : (ativacaoPct>=60 ? '<span>✅</span><span>Ativação acima da meta (60%)</span>' : '<span>⚠️</span><span>Ativação abaixo da meta (60%)</span>');
 
     document.getElementById('mRingPct').textContent = vincPct+'%';
-    document.getElementById('mRingDesc').textContent = `${vincPct}% dos alunos ativos estão no método GeFit`;
+    document.getElementById('mRingDesc').textContent = `${vincPct}% dos alunos ativos estão no método`;
     document.getElementById('mRingBar').style.width = Math.min(100,vincPct)+'%';
     const circunf = 276.5;
     document.getElementById('mRingFill').setAttribute('stroke-dashoffset', String(circunf - (circunf*Math.min(100,vincPct)/100)));
