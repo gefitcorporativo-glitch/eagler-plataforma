@@ -3,7 +3,7 @@
    Regras no código, sem IA. Dados em eagler_marketing_projeto (academia_id, dados, updated_at). */
 (function(){
 'use strict';
-const ROTEIROS=[{"id": "institucional", "titulo": "Institucional da Eagler Gym", "resumo": "Grave na vertical e escolha um vídeo em cada cartão. Gancho e CTA têm duas alternativas.", "tomadas": [{"id": "gancho-a", "titulo": "Gancho A", "instrucao": "De frente para a câmera, salão de musculação ao fundo, celular na altura dos olhos, 3 a 4 segundos. Tom de pergunta, olhando para a lente.", "fala": "Você já entrou numa academia sem saber por onde começar?", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "a"}, "img": false}, {"id": "gancho-b", "titulo": "Gancho B", "instrucao": "Mesmo enquadramento do Gancho A. Tom de quem conta um segredo, sem pressa, 3 a 4 segundos.", "fala": "Treinar sem saber o que você sente é treinar no escuro.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "b"}, "img": false}, {"id": "tomada-1", "titulo": "Tomada 1 · Contexto", "instrucao": "Caminhando pelo salão, câmera na altura do peito, movimento lento. Mostre aparelhos e pessoas treinando, só com quem autorizou. 6 a 8 segundos.", "fala": "Aqui na Eagler Gym, em {cidade}, a gente cuida de quem quer treinar de verdade.", "meta": {"funcao": "tomada-01", "posicao": 2}, "img": true}, {"id": "tomada-2", "titulo": "Tomada 2 · Diferencial", "instrucao": "De frente, em plano médio, com a recepção ou o salão ao fundo. Fale com calma, como numa conversa. 8 a 10 segundos.", "fala": "Antes de treinar, a gente conversa sobre o que você sente e o que você quer. Com isso, o seu treino sai pensado para você. {etapas}", "meta": {"funcao": "tomada-02", "posicao": 3}, "img": false}, {"id": "tomada-3", "titulo": "Tomada 3 · Exemplo no salão", "instrucao": "Celular na mão de outra pessoa, cena real: o treinador ao lado do aluno, corrigindo o movimento ou ajustando a carga. Peça autorização do aluno. 8 a 10 segundos.", "fala": "Olha como é no salão: o treinador está do lado, corrige o movimento e ajusta o treino com você.", "meta": {"funcao": "tomada-03", "posicao": 4}, "img": true}, {"id": "tomada-4", "titulo": "Tomada 4 · Ambiente (sem fala)", "instrucao": "Câmera traseira, vertical, sem fala. Grave quatro imagens curtas: fachada, recepção, salão e um detalhe (barra, anilhas ou piso). 5 a 7 segundos cada, em um único arquivo ou em arquivos separados.", "fala": "", "meta": {"funcao": "tomada-04", "posicao": 5}, "img": false}, {"id": "tomada-5", "titulo": "Tomada 5 · Convite", "instrucao": "De frente, sorrindo, no mesmo local da Tomada 2. Só use esta tomada depois que o Ronald confirmar a oferta e a validade. 6 a 8 segundos.", "fala": "{oferta}", "meta": {"funcao": "tomada-05", "posicao": 6}, "img": false}, {"id": "cta-a", "titulo": "CTA A · WhatsApp", "instrucao": "De frente, olhando para a lente, fechamento firme e simpático. 4 a 6 segundos.", "fala": "Quer conhecer? Chama a gente no WhatsApp e agenda a sua visita. {wpp}", "meta": {"funcao": "cta", "posicao": 7, "variacao": "a"}, "img": false}, {"id": "cta-b", "titulo": "CTA B · Experiência", "instrucao": "Mesmo enquadramento do CTA A. 4 a 6 segundos.", "fala": "Marca a sua Experiência na Eagler Gym. O link está no nosso perfil. {link}", "meta": {"funcao": "cta", "posicao": 7, "variacao": "b"}, "img": false}]}, {"id": "primeiro-treino", "titulo": "Primeiro treino na Eagler Gym", "resumo": "Reel de acolhimento para quem tem vergonha ou não sabe começar. Grave na vertical, um vídeo por cartão.", "tomadas": [{"id": "gancho-a", "titulo": "Gancho A", "instrucao": "De frente, salão ao fundo, 3 a 4 segundos, tom de quem entende o medo.", "fala": "Vergonha de treinar pela primeira vez? Todo mundo já passou por isso.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "a"}, "img": false}, {"id": "gancho-b", "titulo": "Gancho B", "instrucao": "Mesmo enquadramento, 3 a 4 segundos, tom direto.", "fala": "Você não precisa começar no chute.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "b"}, "img": false}, {"id": "tomada-1", "titulo": "Tomada 1 · Chegada", "instrucao": "Câmera na entrada ou recepção, alguém recebendo uma pessoa que chega (com autorização). 6 a 8 segundos.", "fala": "Quando você chega, tem alguém para te receber e te mostrar o espaço.", "meta": {"funcao": "tomada-01", "posicao": 2}, "img": true}, {"id": "tomada-2", "titulo": "Tomada 2 · Conversa inicial", "instrucao": "Plano médio, treinador conversando com o aluno, só com autorização. 8 a 10 segundos.", "fala": "Antes do primeiro treino, a gente conversa sobre o seu objetivo e o que você sente. {etapas}", "meta": {"funcao": "tomada-02", "posicao": 3}, "img": true}, {"id": "tomada-3", "titulo": "Tomada 3 · Primeiro exercício", "instrucao": "Cena real do treinador ensinando o movimento ao lado do aluno. 8 a 10 segundos.", "fala": "Você aprende o movimento com o treinador do lado, no seu ritmo.", "meta": {"funcao": "tomada-03", "posicao": 4}, "img": true}, {"id": "tomada-4", "titulo": "Tomada 4 · Ambiente (sem fala)", "instrucao": "Câmera traseira, vertical, sem fala. Salão, aparelhos e detalhes. 5 a 7 segundos cada.", "fala": "", "meta": {"funcao": "tomada-04", "posicao": 5}, "img": false}, {"id": "cta-a", "titulo": "CTA A · WhatsApp", "instrucao": "De frente, olhando para a lente. 4 a 6 segundos.", "fala": "Quer dar o primeiro passo? Chama a gente no WhatsApp. {wpp}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "a"}, "img": false}, {"id": "cta-b", "titulo": "CTA B · Visita", "instrucao": "Mesmo enquadramento. 4 a 6 segundos.", "fala": "Vem conhecer a Eagler Gym. O link para agendar está no nosso perfil. {link}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "b"}, "img": false}]}];
+const ROTEIROS=[{"id": "institucional", "titulo": "Institucional da Eagler Gym", "resumo": "Grave na vertical e escolha um vídeo em cada cartão. Gancho e CTA têm duas alternativas.", "tomadas": [{"id": "gancho-a", "titulo": "Gancho A", "instrucao": "De frente para a câmera, salão de musculação ao fundo, celular na altura dos olhos, 3 a 4 segundos. Tom de pergunta, olhando para a lente.", "fala": "Você já entrou numa academia sem saber por onde começar?", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "a"}, "img": false}, {"id": "gancho-b", "titulo": "Gancho B", "instrucao": "Mesmo enquadramento do Gancho A. Tom de quem conta um segredo, sem pressa, 3 a 4 segundos.", "fala": "Treinar sem saber o que você sente é treinar no escuro.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "b"}, "img": false}, {"id": "tomada-1", "titulo": "Tomada 1 · Contexto", "instrucao": "Caminhando pelo salão, câmera na altura do peito, movimento lento. Mostre aparelhos e pessoas treinando, sem focar em ninguém que não tenha autorizado. 6 a 8 segundos.", "fala": "Aqui na Eagler Gym, em {cidade}, a gente cuida de quem quer treinar de verdade.", "meta": {"funcao": "tomada-01", "posicao": 2}, "img": true}, {"id": "tomada-2", "titulo": "Tomada 2 · Diferencial", "instrucao": "De frente, em plano médio, com a recepção ou o salão ao fundo. Fale com calma, como numa conversa. 8 a 10 segundos.", "fala": "Antes de treinar, a gente conversa sobre o que você sente e o que você quer. Com isso, o seu treino sai pensado para você. {etapas}", "meta": {"funcao": "tomada-02", "posicao": 3}, "img": false}, {"id": "tomada-3", "titulo": "Tomada 3 · Exemplo no salão", "instrucao": "Celular na mão de outra pessoa, cena real: o treinador ao lado do aluno, corrigindo o movimento ou ajustando a carga. Combine antes com o aluno e peça a autorização. Prefira quem já treina há algum tempo e topou participar. 8 a 10 segundos.", "fala": "Olha como é no salão: o treinador está do lado, corrige o movimento e ajusta o treino com você.", "meta": {"funcao": "tomada-03", "posicao": 4}, "img": true}, {"id": "tomada-4", "titulo": "Tomada 4 · Ambiente (sem fala)", "instrucao": "Câmera traseira, vertical, sem fala. Grave quatro imagens curtas: fachada, recepção, salão e um detalhe (barra, anilhas ou piso). 5 a 7 segundos cada, em um único arquivo ou em arquivos separados.", "fala": "", "meta": {"funcao": "tomada-04", "posicao": 5}, "img": false}, {"id": "tomada-5", "titulo": "Tomada 5 · Convite", "instrucao": "De frente, sorrindo, no mesmo local da Tomada 2. Só use esta tomada depois que o Ronald confirmar a oferta e a validade. 6 a 8 segundos.", "fala": "{oferta}", "meta": {"funcao": "tomada-05", "posicao": 6}, "img": false}, {"id": "cta-a", "titulo": "CTA A · WhatsApp", "instrucao": "De frente, olhando para a lente, fechamento firme e simpático. 4 a 6 segundos.", "fala": "Quer conhecer? Chama a gente no WhatsApp e agenda a sua visita. {wpp}", "meta": {"funcao": "cta", "posicao": 7, "variacao": "a"}, "img": false}, {"id": "cta-b", "titulo": "CTA B · Experiência", "instrucao": "Mesmo enquadramento do CTA A. 4 a 6 segundos.", "fala": "Marca a sua Experiência na Eagler Gym. O link está no nosso perfil. {link}", "meta": {"funcao": "cta", "posicao": 7, "variacao": "b"}, "img": false}]}, {"id": "primeiro-treino", "titulo": "Primeiro treino na Eagler Gym", "resumo": "Reel de acolhimento para quem tem vergonha ou não sabe começar. Grave na vertical, um vídeo por cartão.", "tomadas": [{"id": "gancho-a", "titulo": "Gancho A", "instrucao": "De frente, salão ao fundo, 3 a 4 segundos, tom de quem entende o medo.", "fala": "Vergonha de treinar pela primeira vez? Todo mundo já passou por isso.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "a"}, "img": false}, {"id": "gancho-b", "titulo": "Gancho B", "instrucao": "Mesmo enquadramento, 3 a 4 segundos, tom direto.", "fala": "Você não precisa começar no chute.", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "b"}, "img": false}, {"id": "tomada-1", "titulo": "Tomada 1 · Recepção preparada", "instrucao": "Grave o espaço e a equipe prontos para receber: a recepção arrumada, a recepcionista sorrindo e o balcão. Não grave um visitante novo na chegada. Se quiser mostrar o acolhimento, combine antes com um aluno antigo ou com um funcionário que represente a cena. 6 a 8 segundos.", "fala": "Quando você chega, tem alguém preparado para te receber e te mostrar o espaço.", "meta": {"funcao": "tomada-01", "posicao": 2}, "img": false}, {"id": "tomada-2", "titulo": "Tomada 2 · Conversa inicial", "instrucao": "Plano médio, treinador conversando com um aluno que já treina e topou participar, ou com um funcionário que represente a cena. Com aluno novo, só depois da consultoria e se ele aceitar. 8 a 10 segundos.", "fala": "Antes do primeiro treino, a gente conversa sobre o seu objetivo e o que você sente. {etapas}", "meta": {"funcao": "tomada-02", "posicao": 3}, "img": true}, {"id": "tomada-3", "titulo": "Tomada 3 · Primeiro exercício", "instrucao": "Cena real do treinador ensinando o movimento ao lado do aluno. 8 a 10 segundos.", "fala": "Você aprende o movimento com o treinador do lado, no seu ritmo.", "meta": {"funcao": "tomada-03", "posicao": 4}, "img": true}, {"id": "tomada-4", "titulo": "Tomada 4 · Ambiente (sem fala)", "instrucao": "Câmera traseira, vertical, sem fala. Salão, aparelhos e detalhes. 5 a 7 segundos cada.", "fala": "", "meta": {"funcao": "tomada-04", "posicao": 5}, "img": false}, {"id": "cta-a", "titulo": "CTA A · WhatsApp", "instrucao": "De frente, olhando para a lente. 4 a 6 segundos.", "fala": "Quer dar o primeiro passo? Chama a gente no WhatsApp. {wpp}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "a"}, "img": false}, {"id": "cta-b", "titulo": "CTA B · Visita", "instrucao": "Mesmo enquadramento. 4 a 6 segundos.", "fala": "Vem conhecer a Eagler Gym. O link para agendar está no nosso perfil. {link}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "b"}, "img": false}]}, {"id": "depoimento-experiencia", "titulo": "Depoimento depois da Experiência", "resumo": "Grave só com quem aceitou, depois da Experiência ou da consultoria. É uma conversa curta: você pergunta e o aluno responde com as palavras dele. Vertical, um vídeo por cartão.", "tomadas": [{"id": "gancho-a", "titulo": "Gancho A · Depoimento", "instrucao": "Pegue o trecho mais forte da resposta do aluno e use como abertura na edição. Para gravar: pergunte \"O que você achou da sua Experiência?\" e deixe o aluno responder livre, olhando para você. 4 a 6 segundos de resposta.", "fala": "", "meta": {"funcao": "gancho", "posicao": 1, "variacao": "a"}, "img": true}, {"id": "tomada-1", "titulo": "Tomada 1 · Antes de vir", "instrucao": "Pergunte: \"Como você se sentia antes de vir treinar aqui?\" O aluno responde livre. 6 a 8 segundos.", "fala": "", "meta": {"funcao": "tomada-01", "posicao": 2}, "img": true}, {"id": "tomada-2", "titulo": "Tomada 2 · O que foi diferente", "instrucao": "Pergunte: \"O que foi diferente do que você já viu em outras academias?\" Se ele não citar, pergunte sobre a conversa inicial e o acompanhamento. 8 a 10 segundos.", "fala": "", "meta": {"funcao": "tomada-02", "posicao": 3}, "img": true}, {"id": "tomada-3", "titulo": "Tomada 3 · A consultoria", "instrucao": "Pergunte: \"O que mais te chamou atenção na consultoria?\" Registre também uma imagem de apoio do aluno treinando, se ele autorizar. 8 a 10 segundos.", "fala": "", "meta": {"funcao": "tomada-03", "posicao": 4}, "img": true}, {"id": "tomada-4", "titulo": "Tomada 4 · Recado", "instrucao": "Pergunte: \"O que você diria para quem tem receio de começar?\" Resposta livre. 6 a 8 segundos.", "fala": "", "meta": {"funcao": "tomada-04", "posicao": 5}, "img": true}, {"id": "cta-a", "titulo": "CTA A · WhatsApp", "instrucao": "Quem fala é você ou o líder técnico, de frente, depois do depoimento. 4 a 6 segundos.", "fala": "Quer viver a sua Experiência? Chama a gente no WhatsApp. {wpp}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "a"}, "img": false}, {"id": "cta-b", "titulo": "CTA B · Link", "instrucao": "Mesmo enquadramento do CTA A. 4 a 6 segundos.", "fala": "Marca a sua Experiência na Eagler Gym. O link está no nosso perfil. {link}", "meta": {"funcao": "cta", "posicao": 6, "variacao": "b"}, "img": false}]}];
 const TIERS={
   minimo:{nome:'Mínimo para começar',reels:2,estaticos:1,stories:3,anuncios:2,storiesTxt:'3 por dia, 1 por turno'},
   ideal:{nome:'Recomendado',reels:3,estaticos:2,stories:6,anuncios:3,storiesTxt:'6 a 8 por dia'}
@@ -13,14 +13,15 @@ const TURNOS=[['manha','Manhã'],['tarde','Tarde'],['noite','Noite']];
 const POOL={
   manha:{recepcao:['Bom dia da recepção: horário do dia e o que acontece hoje','Quem está na recepção hoje e o que ele resolve','Aviso rápido do dia (horário, aula, mudança)'],
          tecnica:['Dica do treinador em 15 segundos: um cuidado no exercício','Aquecimento do dia: um movimento e para que serve','Pergunta do dia sobre treino, com resposta na caixinha']},
-  tarde:{recepcao:['Bastidor: movimento da academia, sem expor aluno sem autorização','Quem chegou para a Experiência ou para a avaliação (com autorização)','Mostre uma aula ou modalidade acontecendo'],
+  tarde:{recepcao:['Bastidor: movimento da academia, sem expor aluno sem autorização','Convite depois da Experiência: o aluno conta em 30 segundos como foi, só se ele topar','Mostre uma aula ou modalidade acontecendo'],
          tecnica:['Treino do dia: um exercício, como fazer e o erro mais comum','Treinador ajustando um movimento (com autorização do aluno)','Um aparelho e para quem ele serve']},
   noite:{recepcao:['Horário de amanhã e quem atende','Convite para a avaliação ou a Experiência, com o destino do contato','Lembrete: o que está aberto no fim de semana'],
-         tecnica:['Resumo do dia da equipe técnica: o que foi treinado hoje','Enquete: qual treino você quer ver amanhã','Conquista da semana de um aluno (só com autorização)']}
+         tecnica:['Resumo do dia da equipe técnica: o que foi treinado hoje','Enquete: qual treino você quer ver amanhã','Depoimento ou conquista de um aluno, gravado depois da Experiência ou da consultoria, só com autorização']}
 };
 const PILARES_REEL=[
   {t:'Primeira vez sem vergonha',p:'Quem recebe, quem orienta e como é o primeiro treino.',r:'primeiro-treino'},
   {t:'Consultoria e acompanhamento',p:'Como a equipe entende o que você sente antes de montar o treino.',r:'institucional'},
+  {t:'Prova social: depois da Experiência',p:'O aluno conta como foi a Experiência ou a consultoria e o que achou diferente. Só se ele topar gravar, nunca na chegada.',r:'depoimento-experiencia'},
   {t:'Prova no salão',p:'Treinador ao lado do aluno, corrigindo o movimento, com autorização.'},
   {t:'Constância',p:'Perdeu um dia? Como voltar sem culpa e sem começar do zero.'}
 ];
@@ -157,7 +158,7 @@ async function carregar(){
   try{
     const rows=await sbGet('eagler_marketing_projeto','academia_id=eq.'+encodeURIComponent(acad()));
     dados=(rows&&rows[0]&&rows[0].dados&&rows[0].dados.campos)?rows[0].dados:novoDados();
-    dados.status=dados.status||{};dados.campos=dados.campos||{};
+    dados.status=dados.status||{};dados.campos=dados.campos||{};dados.geracoes=dados.geracoes||[];
     dados._upd=rows&&rows[0]&&rows[0].updated_at;
     tabelaOk=true;
   }catch(e){console.error('projeto marketing:',e);tabelaOk=false;dados=dados||novoDados()}
@@ -293,7 +294,8 @@ function htmlAlertas(c){
 }
 function htmlCalendario(c,pl){
   const hoje=iso(new Date());
-  let h='<div class="mkp-leg"><span><i style="background:var(--or)"></i>Reel</span><span><i style="background:#111"></i>Carrossel ou estático</span><span><i style="background:var(--s3)"></i>Stories (clique no dia para ver os turnos)</span></div>';
+  let h='<div style="margin-bottom:8px"><button class="btn-or btn-sm" type="button" onclick="mkpImprimirHoje()">🖨️ Imprimir a folha de hoje (A4)</button></div>';
+  h+='<div class="mkp-leg"><span><i style="background:var(--or)"></i>Reel</span><span><i style="background:#111"></i>Carrossel ou estático</span><span><i style="background:var(--s3)"></i>Stories (clique no dia para ver os turnos)</span></div>';
   h+='<div class="mkp-wrap"><div class="mkp-cal"><div></div>'+DIAS.map(d=>'<div class="mkp-h">'+d+'</div>').join('');
   pl.semanas.forEach((sem,w)=>{
     h+='<div class="mkp-sem">Semana '+(w+1)+'<small>'+dm(sem[0].data)+' a '+dm(sem[6].data)+'</small></div>';
@@ -318,6 +320,7 @@ function htmlDia(c,cel){
     const key='st-'+k+'-'+i;
     h+='<div class="mkp-ln"><span><b>'+s.turno+'</b></span><span class="mkp-pill '+s.resp+'">'+({recepcao:'Recepção',tecnica:'Equipe técnica',extra:'Interação'}[s.resp])+'</span><span>'+esc(s.pauta)+'</span><label><input type="checkbox" '+(st[key]?'checked':'')+' onchange="mkpMarcar(\''+key+'\',this.checked)"> feito</label></div>';
   });
+  h+='<div class="mkp-acoes" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn-or btn-sm" type="button" onclick="mkpImprimir('+cel.w+','+cel.d+')">🖨️ Imprimir a folha deste dia (A4)</button><button class="btn-gh btn-sm" type="button" onclick="mkpImprimirSemana('+cel.w+')">Imprimir a semana '+(cel.w+1)+'</button></div>';
   return h+'</div>';
 }
 function htmlRotina(c){
@@ -422,6 +425,7 @@ function render(){
   h+='<h3>Nossa sugestão</h3>'+htmlSugestao(c);
   h+='<h3>O que falta confirmar</h3>'+htmlAlertas(c);
   h+='<h3>Cronograma<small>4 semanas</small></h3>'+htmlCalendario(c,pl);
+  h+='<h3>Conteúdo da semana e do mês<small>gerado a partir do plano</small></h3>'+htmlConteudo(c,pode);
   h+='<h3>Rotina de Stories<small>recepção e equipe técnica</small></h3>'+htmlRotina(c);
   h+='<h3>Anúncios<small>criativos rodando</small></h3>'+htmlAnuncios(c,pl);
   h+='<h3>Roteiros para gravar</h3>'+htmlRoteiros(c);
@@ -463,5 +467,141 @@ window.mkpBaixar=function(){
   const b=new Blob([JSON.stringify(pacoteEstudio(C()),null,1)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='roteiros-eagler-preenchidos.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
 };
-window.MKP={gerarPlano,alertas,faltas,roteirosPreenchidos,tier,TIERS,storiesDoDia,pacoteEstudio};
+
+/* ---------- conteúdo da semana ou do mês ---------- */
+let perSel='0';
+function tipoCampanha(c){
+  if(!vazio(c.oferta)&&!vazio(c.oferta_validade))return{t:'Aquisição de novos leads, com oferta',acao:'Agendar a Experiência ou chamar no WhatsApp'};
+  return{t:'Conteúdo institucional e acolhimento',acao:'Agendar a avaliação ou chamar no WhatsApp'};
+}
+function destinoTxt(c){return [!vazio(c.cta_whatsapp)&&('WhatsApp '+c.cta_whatsapp),!vazio(c.cta_link)&&('link '+c.cta_link)].filter(Boolean).join(' ou ')||'a confirmar'}
+function perNome(p){return p==='mes'?'Mês (4 semanas)':'Semana '+(Number(p)+1)}
+function gerarConteudo(c,per){
+  const pl=gerarPlano(c),ro=roteirosPreenchidos(c);
+  const ws=per==='mes'?[0,1,2,3]:[Number(per)];
+  const itens=[];
+  ws.forEach(w=>pl.semanas[w].forEach(cel=>{
+    const k=w+'-'+cel.d,data=iso(cel.data);
+    if(cel.reel){
+      const r=cel.reel.r&&ro.find(x=>x.id===cel.reel.r);
+      itens.push({k:'reel-'+k,data,tipo:'Reel',pilar:cel.reel.t,pauta:cel.reel.p,roteiro:r?r.titulo:'',roteiroPronto:r?r.tomadas.every(x=>x.pronto):false,ganchos:r?r.tomadas.filter(x=>x.meta&&x.meta.funcao==='gancho').map(x=>x.fala):[]});
+    }
+    if(cel.est)itens.push({k:'est-'+k,data,tipo:'Carrossel ou estático',pilar:cel.est.t,pauta:cel.est.p});
+    storiesDoDia(c,cel.d,cel.w).forEach((s,i)=>itens.push({k:'st-'+k+'-'+i,data,tipo:'Story',turno:s.turno,resp:s.resp,pauta:s.pauta}));
+  }));
+  const tc=tipoCampanha(c);
+  return{id:Date.now(),periodo:String(per),geradoEm:Date.now(),plano:tier(c).nome,
+    resumo:{campanha:tc.t,acao:tc.acao,objetivo:c.objetivo||'',publico:c.publico||'',
+      oferta:vazio(c.oferta)?'Sem oferta com prazo':(c.oferta+(vazio(c.oferta_validade)?'':', até '+c.oferta_validade)),
+      destino:destinoTxt(c),inicio:iso(pl.inicio)},
+    itens,pendencias:faltas(c).map(k=>FIELD_LBL[k])};
+}
+function ultimaGeracao(per){return ((dados&&dados.geracoes)||[]).find(g=>g.periodo===String(per))||null}
+function dataBr(s){const d=parse(s);return d?DIAS[(d.getDay()+6)%7]+' '+dm(d):s}
+function htmlConteudo(c,pode){
+  const pers=['0','1','2','3','mes'];
+  let h='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">'+pers.map(p=>{const g=ultimaGeracao(p);return '<button type="button" class="'+(perSel===p?'btn-or':'btn-gh')+' btn-sm" onclick="mkpPer(\''+p+'\')">'+perNome(p)+(g?' ✓':'')+'</button>'}).join('')+'</div>';
+  const g=ultimaGeracao(perSel),st=(dados.status||{});
+  if(!g){
+    h+='<div class="mkp-sug">O conteúdo de <b>'+perNome(perSel)+'</b> ainda não foi gerado pela consultoria.</div>';
+    if(pode)h+='<div style="margin-top:10px"><button class="btn-or btn-sm" type="button" onclick="mkpGerar()">⚙️ Gerar conteúdo: '+perNome(perSel)+'</button></div>';
+    return h;
+  }
+  const r=g.resumo;
+  h+='<div class="mkp-card"><div class="h">📌 '+esc(r.campanha)+'<span class="mkp-st pronto">gerado em '+new Date(g.geradoEm).toLocaleDateString('pt-BR')+' · plano '+esc(g.plano)+'</span></div>'+
+    '<div class="mkp-dl"><div><span>Objetivo</span>'+(vazio(r.objetivo)?'<i style="color:var(--td)">A confirmar</i>':esc(r.objetivo))+'</div>'+
+    '<div><span>Público</span>'+(vazio(r.publico)?'<i style="color:var(--td)">A confirmar</i>':esc(r.publico))+'</div>'+
+    '<div><span>Oferta</span>'+esc(r.oferta)+'</div><div><span>Ação desejada e destino</span>'+esc(r.acao)+' · '+esc(r.destino)+'</div></div>';
+  if(g.pendencias&&g.pendencias.length)h+='<div class="mkp-nota">Ainda falta confirmar: '+esc(g.pendencias.join('; '))+'.</div>';
+  h+='</div>';
+  const porDia={};g.itens.forEach(i=>{(porDia[i.data]=porDia[i.data]||[]).push(i)});
+  Object.keys(porDia).sort().forEach(dt=>{
+    const its=porDia[dt],pecas=its.filter(i=>i.tipo!=='Story'),sts=its.filter(i=>i.tipo==='Story');
+    h+='<div class="mkp-card"><div class="h">'+dataBr(dt)+'</div>';
+    pecas.forEach(i=>{
+      h+='<div class="mkp-ln" style="grid-template-columns:130px 1fr auto"><span class="mkp-pill" style="background:'+(i.tipo==='Reel'?'var(--or);color:#fff':'#111;color:#fff')+'">'+i.tipo+'</span><span><b>'+esc(i.pilar)+'</b><br>'+esc(i.pauta)+(i.ganchos&&i.ganchos.length?'<br><i style="color:var(--td)">Ganchos: '+i.ganchos.map(x=>'“'+esc(x)+'”').join(' ou ')+'</i>':'')+(i.tipo==='Reel'?'<br><span class="mkp-st '+(i.roteiroPronto?'pronto':'falta')+'">'+(i.roteiro?(i.roteiroPronto?'roteiro pronto: ':'roteiro com pendência: ')+esc(i.roteiro):'roteiro ainda a criar')+'</span>':'')+'</span><label><input type="checkbox" '+(st[i.k]?'checked':'')+' onchange="mkpMarcar(\''+i.k+'\',this.checked)"> feito</label></div>';
+    });
+    if(sts.length)h+='<details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;font-weight:600">📱 '+sts.length+' Stories</summary>'+sts.map(s=>'<div class="mkp-ln"><span><b>'+s.turno+'</b></span><span class="mkp-pill '+s.resp+'">'+({recepcao:'Recepção',tecnica:'Equipe técnica',extra:'Interação'}[s.resp])+'</span><span>'+esc(s.pauta)+'</span><label><input type="checkbox" '+(st[s.k]?'checked':'')+' onchange="mkpMarcar(\''+s.k+'\',this.checked)"> feito</label></div>').join('')+'</details>';
+    h+='</div>';
+  });
+  if(pode)h+='<div class="mkp-acoes" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn-or btn-sm" type="button" onclick="mkpGerar()">⚙️ Gerar de novo com os dados atuais</button><button class="btn-gh btn-sm" type="button" onclick="mkpCopiarConteudo()">📋 Copiar em texto</button></div><div class="mkp-nota">Cada geração fica guardada no histórico do projeto. Quando você alterar os dados, gere de novo para atualizar o conteúdo.</div>';
+  return h;
+}
+function conteudoTexto(g){
+  const r=g.resumo;let s='Eagler Gym · '+perNome(g.periodo)+' · gerado em '+new Date(g.geradoEm).toLocaleDateString('pt-BR')+' · plano '+g.plano+'\n';
+  s+='Campanha: '+r.campanha+'\nObjetivo: '+(r.objetivo||'a confirmar')+'\nPúblico: '+(r.publico||'a confirmar')+'\nOferta: '+r.oferta+'\nAção e destino: '+r.acao+' · '+r.destino+'\n';
+  if(g.pendencias&&g.pendencias.length)s+='Falta confirmar: '+g.pendencias.join('; ')+'\n';
+  let dia='';
+  g.itens.forEach(i=>{
+    if(i.data!==dia){dia=i.data;s+='\n'+dataBr(dia)+'\n'}
+    if(i.tipo==='Story')s+='  Story '+i.turno+' ('+({recepcao:'recepção',tecnica:'equipe técnica',extra:'interação'}[i.resp])+'): '+i.pauta+'\n';
+    else s+='  '+i.tipo+': '+i.pilar+'. '+i.pauta+(i.roteiro?' Roteiro: '+i.roteiro+(i.roteiroPronto?' (pronto)':' (com pendência)'):'')+'\n';
+  });
+  return s;
+}
+window.mkpPer=function(p){perSel=String(p);render()};
+window.mkpGerar=async function(){
+  const g=gerarConteudo(C(),perSel);
+  dados.geracoes=[g].concat(dados.geracoes||[]).slice(0,12);
+  if(await gravar('Conteúdo gerado.'))render();
+};
+window.mkpCopiarConteudo=async function(){
+  const g=ultimaGeracao(perSel);if(!g)return;
+  try{await navigator.clipboard.writeText(conteudoTexto(g));toast('Texto copiado.')}catch(e){toast('Não consegui copiar.',true)}
+};
+
+/* ---------- folha A4 do dia (impressão simples, preto e branco) ---------- */
+function folhaHtml(c,cels){
+  const ro=roteirosPreenchidos(c);
+  const resp={recepcao:'Recepção',tecnica:'Equipe técnica',extra:'Interação'};
+  const quem=vazio(c.quem_fala)?'a definir':c.quem_fala;
+  let corpo='';
+  cels.forEach(cel=>{
+    let h='<section class="pg">';
+    h+='<div class="top"><b>EAGLER GYM · FOLHA DO DIA</b><span>'+DIAS[cel.d]+', '+dm(cel.data)+' · Semana '+(cel.w+1)+'</span></div>';
+    h+='<div class="meta">Quem fala nos vídeos: '+esc(quem)+' · Destino do contato: '+esc(destinoTxt(c))+'</div>';
+    if(cel.reel){
+      const r=cel.reel.r&&ro.find(x=>x.id===cel.reel.r);
+      h+='<h2>☐ Reel para gravar: '+esc(cel.reel.t)+'</h2><p class="pt">'+esc(cel.reel.p)+'</p>';
+      if(r){
+        h+='<table><tr><th style="width:22px"></th><th>Cartão</th><th>O que dizer e como gravar</th></tr>';
+        r.tomadas.forEach(x=>{
+          h+='<tr><td>☐</td><td><b>'+esc(x.titulo)+'</b></td><td>'+(x.fala?'<div class="f">“'+esc(x.fala)+'”</div>':'')+'<div class="i">'+esc(x.instrucao)+'</div></td></tr>';
+        });
+        h+='</table>';
+      }else h+='<p class="pt">Roteiro de gravação ainda a criar. Use a pauta acima.</p>';
+      h+='<p class="obs">Vertical, 1080p, luz no rosto, áudio limpo. Grave só quem autorizou. Não grave visitante na chegada: convide depois da Experiência ou da consultoria, e só se ele topar.</p>';
+    }
+    if(cel.est)h+='<h2>☐ '+esc(cel.est.t)+' (carrossel ou estático)</h2><p class="pt">'+esc(cel.est.p)+'</p>';
+    h+='<h2>Stories do dia</h2><table><tr><th>Turno</th><th>Quem</th><th>O que mostrar</th><th style="width:70px">Gravado</th><th style="width:70px">Postado</th></tr>';
+    storiesDoDia(c,cel.d,cel.w).forEach(s=>{h+='<tr><td><b>'+s.turno+'</b></td><td>'+resp[s.resp]+'</td><td>'+esc(s.pauta)+'</td><td>☐</td><td>☐</td></tr>'});
+    h+='</table>';
+    h+='<p class="obs">Se um aluno concordar em contar como foi a Experiência, grave 30 segundos e peça autorização para postar. Se ele não quiser gravar, não insista.</p>';
+    h+='<div class="rod">Anotações: ______________________________________________________________</div></section>';
+    corpo+=h;
+  });
+  return '<!doctype html><html><head><meta charset="utf-8"><title>Folha do dia · Eagler Gym</title><style>'+
+  '@page{size:A4;margin:12mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11pt;margin:0}'+
+  '.pg{page-break-after:always}.pg:last-child{page-break-after:auto}'+
+  '.top{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:4px;font-size:12pt}'+
+  '.meta{font-size:9pt;margin:5px 0 8px}h2{font-size:12pt;margin:12px 0 4px;border-bottom:1px solid #000}'+
+  '.pt{margin:2px 0 6px;font-size:10.5pt}table{width:100%;border-collapse:collapse;font-size:9.5pt}th,td{border:1px solid #000;padding:4px 5px;vertical-align:top;text-align:left}th{background:#eee}'+
+  '.f{font-size:10pt;margin-bottom:2px}.i{font-size:8.5pt;color:#222}.obs{font-size:8.5pt;margin:6px 0;border-left:3px solid #000;padding-left:6px}.rod{margin-top:14px;font-size:9pt}'+
+  '</style></head><body>'+corpo+'</body></html>';
+}
+function imprimirHtml(html){
+  const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+  document.body.appendChild(f);
+  const d=f.contentWindow.document;d.open();d.write(html);d.close();
+  setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast('Não consegui abrir a impressão.',true)}setTimeout(()=>f.remove(),60000)},350);
+}
+window.mkpImprimir=function(w,d){const pl=gerarPlano(C());imprimirHtml(folhaHtml(C(),[pl.semanas[w][d]]))};
+window.mkpImprimirSemana=function(w){const pl=gerarPlano(C());imprimirHtml(folhaHtml(C(),pl.semanas[w]))};
+window.mkpImprimirHoje=function(){
+  const pl=gerarPlano(C()),hoje=iso(new Date());
+  let alvo=null;pl.semanas.forEach(s=>s.forEach(x=>{if(iso(x.data)===hoje)alvo=x}));
+  if(!alvo){toast('Hoje ainda não está dentro do plano. Abrindo o primeiro dia.');alvo=pl.semanas[0][0]}
+  imprimirHtml(folhaHtml(C(),[alvo]));
+};
+window.MKP={folhaHtml,gerarConteudo,conteudoTexto,gerarPlano,alertas,faltas,roteirosPreenchidos,tier,TIERS,storiesDoDia,pacoteEstudio};
 })();
