@@ -414,7 +414,7 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
         .mk-acoes .btn-or[disabled],.mk-acoes .btn-gh[disabled]{opacity:.45;cursor:not-allowed}
         .mk-nota{font-size:12px;color:var(--td);margin-top:16px;line-height:1.5}
       </style>
-      <div style="margin-bottom:14px">
+      <div id="mkp-head" style="margin-bottom:14px">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Marketing</div>
         <div style="font-size:13px;color:var(--td)">Campanhas, gravações e anúncios da Eagler Gym em um só lugar.</div>
       </div>
@@ -437,13 +437,21 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
           </div>
         </div>
         <div class="at-card mk-card">
+          <span class="mk-tag ok">Novo</span>
+          <div class="at-ic">🗓️</div>
+          <h4>Projeto de marketing</h4>
+          <p>O plano de 4 semanas da Eagler: Reels, Stories e anúncios no calendário, com o mínimo para começar e o recomendado.</p>
+          <div class="mk-acoes"><button class="btn-or btn-sm" type="button" onclick="mkpAbrir()">🗓️ Abrir o plano</button></div>
+        </div>
+        <div class="at-card mk-card">
           <span class="mk-tag">Em preparação</span>
           <div class="at-ic">📊</div>
           <h4>Tráfego pago</h4>
           <p>Anúncios e resultados. Começa depois do primeiro vídeo aprovado e do convite de parceiro na sua conta de anúncios. Você só aprova o convite: nunca envie senhas.</p>
         </div>
       </div>
-      <div class="mk-nota">Os vídeos brutos e as edições ficam guardados em pasta privada. Cada vídeo só aparece aqui depois de liberado para a academia.</div>
+      <div id="mkp-nota" class="mk-nota">Os vídeos brutos e as edições ficam guardados em pasta privada. Cada vídeo só aparece aqui depois de liberado para a academia.</div>
+      <div id="mkp-root"></div>
       <script>
         // Estúdio de gravação: a rota da academia só é ligada depois de validada pelo Codex e aprovada pelo Nelson.
         const ESTUDIO_URL = 'https://studio.gefithub.com.br/a/eagler';
@@ -1537,6 +1545,7 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
   </div>
 </div>
 
+<script src="marketing-projeto.js"></script>
 <script>
 // ══ SUPABASE ══
 const SB_URL='https://irwvagffrguiljaxrzmd.supabase.co';
