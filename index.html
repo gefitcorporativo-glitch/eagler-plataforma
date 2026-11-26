@@ -5332,6 +5332,16 @@ const AT_MODULOS=[
   {ic:'📈',nome:'Painel de Vendas',url:'retencao/painel_vendas.html',quem:'Consultor(a) e Gestor(a)',desc:'Funil de experiências e follow-ups.'},
   {ic:'🧭',nome:'Mapa do Sistema',url:'retencao/mapa_retencao.html',quem:'Todos',desc:'Como cada tela funciona, passo a passo.'}
 ];
+// ══ GUIA DA CONSULTORA (tela inicial) ══
+const TOUR_INICIO={id:'hub-consultora',passos:[
+  {el:'#pan-inicio h2',t:'Seu caminho de trabalho',x:'Esta tela é o seu ponto de partida todo dia. Siga sempre a mesma ordem e você não se perde.'},
+  {el:'.ini-card.destaque',t:'1 · Meu dia (comece aqui)',x:'Primeiro resolva os agendamentos de ontem (a pessoa veio ou não? peça feedback ou reagende). Depois confirme os de hoje, sem perguntar se ela vai. Por último, faça os retornos e as primeiras tentativas. <b>Tudo o que precisa fazer hoje está nessa tela.</b>'},
+  {el:()=>document.querySelectorAll('.ini-card')[1],t:'2 · Kanban',x:'Chegou lead novo? <b>Primeiro cadastre no Actuar.</b> Depois adicione aqui no Kanban, escolhendo se é lead novo ou reconexão, e deixe sempre o próximo contato marcado. Dentro de cada card você vê o script certo (texto + áudio).'},
+  {el:()=>document.querySelectorAll('.ini-card')[2],t:'3 · Leads chegando',x:'Só para você acompanhar quem acabou de chegar. Não precisa mexer em nada aqui.'},
+  {el:()=>document.querySelectorAll('.ini-card')[3],t:'4 · Scripts',x:'Mensagens prontas por funil. Use quando precisar de uma opção de texto ou áudio diferente da que o card sugeriu.'},
+  {el:()=>document.querySelectorAll('.ini-card')[4],t:'5 · Gravar hoje',x:'Em breve: aqui vai aparecer o que gravar no dia para stories e reels. Por enquanto, não precisa fazer nada.'},
+  {el:()=>document.querySelectorAll('.ini-card')[5],t:'6 · Meu resultado',x:'Seus números: tentativas, contatos, agendamentos e matrículas. Olhe para acompanhar sua evolução.'},
+  {el:()=>document.querySelectorAll('.ini-card')[6],t:'7 · Lançar dia (no fim do dia)',x:'Antes de ir embora, lance o seu relatório do dia. Cada consultora lança o seu.'}]};
 // ══ JORNADA GUIADA DA EQUIPE (aba Equipe, só gestão) ══
 const TOUR_HUB={id:'hub-equipe',antes:()=>{const g=document.getElementById('treinadores-grid');if(g)g.scrollIntoView({block:'center'})},passos:[
   {el:'#treinadores-grid',t:'Treinadores(as)',x:'Aqui está a sua equipe técnica.'},
@@ -5340,7 +5350,8 @@ const TOUR_HUB={id:'hub-equipe',antes:()=>{const g=document.getElementById('trei
   {el:'#btn-funcionamento',t:'🏢 Funcionamento',x:'Dias e horários em que a academia abre. Só os dias abertos contam como dia de lançamento.'},
   {el:'.tab[data-tab="areatreinador"]',t:'🏋️ Área do Treinador',x:'Conecta com a mesma senha do Hub. Verde = conectado. É de lá que sai o Lançamento do dia para o computador da musculação.'}]};
 function tourEquipeHub(t){
-  if(!window.GFTour)return;const gestao=sessao&&['gestor','admin'].includes(sessao.role);
+  if(!window.GFTour)return;
+  if(typeof isConsultor==='function'&&isConsultor()){GFTour.botao(TOUR_INICIO);if(t==='inicio'&&!document.querySelector('.modal-ov.open'))GFTour.primeiraVez(TOUR_INICIO);return}const gestao=sessao&&['gestor','admin'].includes(sessao.role);
   if(t==='consultoras'&&gestao){GFTour.botao(TOUR_HUB);if(!document.querySelector('.modal-ov.open'))GFTour.primeiraVez(TOUR_HUB)}
   else{const b=document.getElementById('gft-btn');if(b)b.remove()}
 }
