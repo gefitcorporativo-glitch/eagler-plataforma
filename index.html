@@ -251,6 +251,32 @@ body.role-consultor .tab:not([data-tab="inicio"]):not([data-tab="painel"]):not([
 body:not(.role-consultor) .tab[data-tab="inicio"],body:not(.role-consultor) .cons-only{display:none!important}
 .lbl-c{display:none}body.role-consultor .tab[data-tab="painel"] .lbl-n{display:none}body.role-consultor .tab[data-tab="painel"] .lbl-c{display:inline!important}
 body.role-consultor #menu-ferr,body.role-consultor #btn-apres{display:none!important}
+
+#trein-ov{display:none;position:fixed;inset:0;z-index:9800;background:rgba(10,8,8,.82);align-items:center;justify-content:center;padding:16px}
+#trein-ov.show{display:flex}
+#trein-box{background:#fff;color:#1A1A1A;width:min(980px,100%);max-height:94vh;border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.5)}
+#trein-top{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#111;color:#fff}
+#trein-top b{font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:.5px;flex:1}
+#trein-top button{background:none;border:none;color:#fff;font-size:22px;cursor:pointer}
+#trein-bar{height:5px;background:#eee}#trein-bar i{display:block;height:100%;background:#D91E18;transition:width .25s}
+#trein-body{padding:26px 34px;overflow:auto;flex:1;min-height:420px}
+#trein-body h2{font-family:'Barlow Condensed',sans-serif;font-size:36px;line-height:1.05;margin:0 0 6px}
+#trein-body .ic{font-size:44px}
+#trein-body .lead{font-size:18px;color:#444;margin:4px 0 16px}
+#trein-body ul{margin:8px 0 0;padding-left:0;list-style:none}
+#trein-body li{font-size:17px;margin:9px 0;padding:10px 14px;background:#F8F6F6;border-radius:10px;border-left:4px solid #D91E18}
+#trein-body li.ok{border-left-color:#2E9E5B}#trein-body li.no{border-left-color:#B3261E;background:#FDECEA}
+.tflow{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:14px 0}
+.tflow .b{flex:1;min-width:120px;background:#FFF1F0;border:2px solid #D91E18;border-radius:12px;padding:10px 12px;font-weight:700;font-size:15px;text-align:center}
+.tflow .b small{display:block;font-weight:500;color:#555;margin-top:3px;font-size:12.5px}
+.tflow .b.g{background:#EAF7EE;border-color:#2E9E5B}.tflow .b.y{background:#FFF7E0;border-color:#C9A227}
+.tflow .a{align-self:center;font-size:22px;color:#D91E18;font-weight:800}
+.tnota{background:#FFF7E0;border:1px solid #F0D58A;border-radius:12px;padding:12px 16px;margin-top:14px;font-size:16px}
+#trein-nav{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid #eee}
+#trein-nav .cnt{flex:1;text-align:center;font-size:13px;color:#777}
+#trein-nav button{border-radius:10px;padding:10px 20px;font:700 16px 'Barlow Condensed',sans-serif;cursor:pointer;border:1px solid #ccc;background:#fff}
+#trein-nav button.pri{background:#D91E18;color:#fff;border:none}
+@media(max-width:600px){#trein-body{padding:18px}#trein-body h2{font-size:28px}}
 .ini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px}
 .ini-card{background:var(--s2,#fff);border:1px solid var(--bd,rgba(0,0,0,.12));border-radius:16px;padding:20px;cursor:pointer;text-align:left}
 .ini-card .ic{font-size:32px}.ini-card h3{font-size:22px;margin:6px 0 4px}.ini-card p{font-size:13.5px;opacity:.75;margin:0}
@@ -386,9 +412,11 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
 
   <div class="tabs">
     <div class="tab" data-tab="inicio" onclick="switchTab('inicio')">🏠 Começar por aqui</div>
+    <div class="tab cons-only" onclick="abrirTreinamento()">🎓 Treinamento</div>
     <div class="tab cons-only" onclick="abrirMeuDia()">📅 Meu dia ↗</div>
     <div class="tab cons-only" onclick="abrirCampanhas()">🗂 Kanban ↗</div>
     <div class="tab cons-only" onclick="abrirCentralLeads()">🎯 Leads ↗</div>
+    <div class="tab cons-only" onclick="lancarRecebimentoPeloHub()">💰 Lançar recebimento ↗</div>
     <div class="tab cons-only" onclick="abrirBibliotecaAcademia()">💬 Scripts</div>
     <div class="tab cons-only" onclick="abrirGravarHoje()">🎥 Gravar hoje · em breve</div>
     <div class="nav-group-label">🧭 Estratégia</div>
@@ -617,13 +645,15 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
       <h2 style="font-size:34px;margin:6px 0 2px">Bom dia! Por onde começar?</h2>
       <p style="opacity:.75;font-size:15px;margin:0">Siga a ordem: comece pelo <b>Meu dia</b>. Ele mostra tudo o que precisa fazer hoje.</p>
       <div class="ini-grid">
+        <div class="ini-card destaque" style="border-color:#2E9E5B;background:rgba(46,158,91,.07)" onclick="abrirTreinamento()"><div class="ic">🎓</div><h3>Treinamento · veja antes de começar</h3><p>Slides rápidos com a sua rotina, passo a passo: lead novo, funis, tentativas, agendamentos e o fim do dia.</p></div>
         <div class="ini-card destaque" onclick="abrirMeuDia()"><div class="ic">📅</div><h3>1 · Meu dia</h3><p>Agendamentos para resolver, confirmações de hoje, retornos e primeiras tentativas. Comece sempre por aqui.</p></div>
         <div class="ini-card" onclick="abrirCampanhas()"><div class="ic">🗂</div><h3>Kanban</h3><p>Seus leads por etapa. Cadastre lead novo (primeiro no Actuar) e acompanhe experiências.</p></div>
         <div class="ini-card" onclick="abrirCentralLeads()"><div class="ic">🎯</div><h3>Leads chegando</h3><p>Veja os leads que acabaram de chegar. Só consulta.</p></div>
         <div class="ini-card" onclick="abrirBibliotecaAcademia()"><div class="ic">💬</div><h3>Scripts</h3><p>Mensagens prontas por funil, texto e áudio.</p></div>
         <div class="ini-card" onclick="abrirGravarHoje()"><div class="ic">🎥</div><h3>Gravar hoje <small style="font-size:12px;color:#9A6A00">· em breve</small></h3><p>Prévia do que gravar no dia para stories e reels.</p></div>
         <div class="ini-card" onclick="switchTab('painel')"><div class="ic">📊</div><h3>Meu resultado</h3><p>Seus números: tentativas, contatos, agendamentos e matrículas.</p></div>
-        <div class="ini-card" onclick="if(!ac()){toast('Selecione uma academia.',true);return}openM('m-lanc')"><div class="ic">✍️</div><h3>Lançar dia</h3><p>No fim do dia, lance o seu relatório.</p></div>
+        <div class="ini-card" onclick="lancarRecebimentoPeloHub()"><div class="ic">💰</div><h3>Lançar recebimento</h3><p>Recebeu um plano? Lance na hora: nome completo, valor, plano e forma de pagamento.</p></div>
+        <div class="ini-card" onclick="if(!ac()){toast('Selecione uma academia.',true);return}openM('m-lanc')"><div class="ic">✍️</div><h3>Lançar dia</h3><p>No fim do dia, confira o resumo e envie o seu relatório.</p></div>
       </div>
     </div>
     <div id="pan-painel" class="panel">
@@ -1226,7 +1256,8 @@ body.role-consultor #painel-prod-time,body.role-consultor #painel-cons-filter{di
       </div>
 
       <div class="fg" style="margin-bottom:10px"><label class="fl">Observação do dia</label><input class="fi" id="lanc-obs" placeholder="Ex: Campanha ativa, evento na academia..."></div>
-      <div class="sec-div"><div class="sec-div-line"></div><div class="sec-div-lbl">Indicadores por Funil</div><div class="sec-div-line"></div></div>
+      <div id="lanc-resumo"></div>
+      <div class="sec-div"><div class="sec-div-line"></div><div class="sec-div-lbl">Indicadores por Funil (ajuste aqui se precisar)</div><div class="sec-div-line"></div></div>
       <div id="lanc-funis-body"></div>
       <div style="text-align:right;margin-top:14px">
         <button class="btn-or" id="btn-lancar" onclick="lancarDia()">Salvar Lançamento</button>
@@ -2030,6 +2061,7 @@ function populateLancCons(){
   sel.innerHTML='<option value="">Selecione...</option>';
   const a=ac();if(!a)return;
   Object.entries(a.consultoras).forEach(([id,c])=>{const o=document.createElement('option');o.value=id;o.textContent=c.nome;sel.appendChild(o)});
+  if(typeof isConsultor==='function'&&isConsultor()&&sessao.consultora_id&&a.consultoras[sessao.consultora_id]){sel.value=sessao.consultora_id;setTimeout(()=>{try{renderLancFunis()}catch(e){console.error(e)}},50)}
 }
 
 // Cache simples pra não bater no banco toda hora, resetado a cada abertura do Lançar Dia
@@ -2204,6 +2236,60 @@ async function renderLancFunis(){
       </div>
     </div>`;
   }).join('');
+  await montarResumoLanc(funisDisponiveis,cid,dadosAuto);
+}
+
+// ══ RESUMO DO DIA (antes de enviar o relatório) ══
+const VENDA_PARA_FUNIL={novo:'f0',renovacao:'f1',rematricula:'f3',upgrade:'f1'};
+async function montarResumoLanc(funisDisp,cid,dadosAuto){
+  const box=document.getElementById('lanc-resumo');if(!box)return;
+  const hoje=new Date().toISOString().slice(0,10);
+  let vendas=[];
+  try{vendas=await sbGet('eagler_vendas',`academia_id=eq.${acId}&consultora_id=eq.${encodeURIComponent(cid)}&data=eq.${hoje}`)}catch(e){console.error(e)}
+  const porF={};
+  vendas.forEach(v=>{const fid=VENDA_PARA_FUNIL[v.perfil_venda]||'f0';(porF[fid]=porF[fid]||[]).push(v)});
+  // preenche convertidos, vendido e planos a partir do livro de vendas
+  Object.keys(porF).forEach(fid=>{
+    const vs=porF[fid],set=(id,v)=>{const el=document.getElementById(`lanc-${fid}-${id}`);if(el)el.value=v};
+    set('convertidos',vs.length);set('vendido',vs.reduce((t,v)=>t+(parseFloat(v.valor)||0),0));
+    PLANOS.forEach(pl=>set('pl-'+pl.k,vs.filter(v=>(v.plano_duracao||'outro')===pl.k).length||''));
+  });
+  const g=(fid,id)=>parseFloat(document.getElementById(`lanc-${fid}-${id}`)?.value)||0;
+  const brl=n=>'R$ '+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const linhas=funisDisp.map(fid=>{
+    const f=fInfo(fid);if(!f)return'';const au=dadosAuto[fid];
+    const tent=g(fid,'tent_novas')+g(fid,'tent_cadencia'),ef=g(fid,'efetivos'),ag=g(fid,'ag_mat')+g(fid,'ag_exp'),cv=g(fid,'convertidos'),vd=g(fid,'vendido'),lista=au?au.lista_total:g(fid,'lista_total');
+    const temPerfil=!!FUNIL_PARA_PERFIL_CAMPANHA[fid];
+    return `<tr><td style="font-weight:700;color:${f.cor}">${f.nome}</td><td>${tent}</td><td>${ef}</td><td>${ag}</td><td>${cv}</td><td>${brl(vd)}</td>
+      <td>${temPerfil?`<input type="number" min="0" value="${lista}" data-fid="${fid}" data-kb="${lista}" oninput="resumoListaAviso(this)" style="width:70px"><div class="rs-av" id="rsav-${fid}" style="font-size:11px;color:#b45309"></div>`:'—'}</td></tr>`;
+  }).join('');
+  const ultimo=consRegs(ac(),cid).reduce((m,r)=>Math.max(m,r.dia||0),0);
+  const diaEl=document.getElementById('lanc-dia');if(diaEl&&!diaEl.value)diaEl.value=Math.min(21,ultimo+1||1);
+  box.innerHTML=`<div style="border:2px solid var(--or,#D91E18);border-radius:14px;padding:14px;margin:10px 0 14px;background:rgba(217,30,24,.04)">
+    <div style="font-weight:800;font-size:18px;margin-bottom:2px">📋 Resumo do seu dia</div>
+    <div style="font-size:13px;opacity:.8;margin-bottom:10px">Confira com o seu caderno: tentativas, contatos e agendamentos. Os números vêm dos seus cards e das vendas que você lançou hoje.</div>
+    <div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:14px" class="rs-tab"><thead><tr style="text-align:left;font-size:12px;opacity:.7"><th>Funil</th><th>Tentativas</th><th>Contatos</th><th>Agendamentos</th><th>Vendas</th><th>Vendido</th><th>Lista no Kanban</th></tr></thead><tbody>${linhas}</tbody></table></div>
+    <div style="font-size:12px;opacity:.75;margin-top:8px">Vendas de hoje: <b>${vendas.length}</b>. Esqueceu alguma? <a href="#" onclick="lancarRecebimentoPeloHub();return false">💰 Lançar recebimento</a></div>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:12px;font-size:14px;cursor:pointer"><input type="checkbox" id="rs-ok" style="width:18px;height:18px"> Conferi com o meu caderno e está certo</label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn-or" onclick="confirmarResumoLanc()">✅ Confirmar e enviar para o relatório</button><button class="btn-gh" onclick="document.querySelectorAll('.lanc-funil-body').forEach(b=>b.style.display='block');document.getElementById('lanc-funis-body').scrollIntoView({behavior:'smooth'})">✎ Ajustar manualmente</button></div>
+  </div>`;
+}
+function resumoListaAviso(inp){
+  const fid=inp.dataset.fid,kb=parseInt(inp.dataset.kb)||0,v=parseInt(inp.value)||0,el=document.getElementById('rsav-'+fid);
+  if(!el)return;
+  if(v>kb)el.innerHTML=`Faltam <b>${v-kb}</b> no Kanban. Cadastre os leads que faltam e depois reabra o resumo. <a href="#" onclick="abrirCampanhas();return false">Abrir Kanban</a>`;
+  else if(v<kb)el.innerHTML=`O Kanban tem <b>${kb-v}</b> a mais. Confira se algum card já foi concluído.`;
+  else el.innerHTML='';
+}
+function confirmarResumoLanc(){
+  if(!document.getElementById('rs-ok').checked){toast('Marque "Conferi com o meu caderno" para enviar',true);return}
+  const av=[...document.querySelectorAll('.rs-av')].filter(e=>e.innerHTML.trim()).length;
+  if(av&&!confirm('A lista informada é diferente da lista do Kanban. Enviar mesmo assim?'))return;
+  lancarDia();
+}
+function lancarRecebimentoPeloHub(){
+  if(!sessao||!sessao.id){toast('Faça login primeiro.',true);return}
+  window.location.href=`campanhas.html?uid=${encodeURIComponent(sessao.id)}&aba=vendas&novo=1`;
 }
 function toggleLancFunilBody(fid){
   const body=document.getElementById('body-'+fid);
@@ -5179,7 +5265,7 @@ function checkWelcome(){
 }
 function openM(id){
   if(id==='m-cons'){renderFunilChecks();renderConsManage();selMeta('planos');}
-  if(id==='m-lanc'){populateLancCons();document.getElementById('lanc-data').value=new Date().toISOString().slice(0,10);document.getElementById('lanc-funis-body').innerHTML='<div style="color:var(--td);font-size:12px">Selecione um(a) consultor(a).</div>';}
+  if(id==='m-lanc'){populateLancCons();document.getElementById('lanc-data').value=new Date().toISOString().slice(0,10);document.getElementById('lanc-resumo').innerHTML='';document.getElementById('lanc-funis-body').innerHTML='<div style="color:var(--td);font-size:12px">Selecione um(a) consultor(a).</div>';}
   document.getElementById(id).classList.add('open');
 }
 function closeM(id){document.getElementById(id).classList.remove('open')}
@@ -5474,6 +5560,11 @@ checkSessaoInicial();
 #apres-go:hover{background:#A80F0A}
 #apres-later{background:#fff;border:1px solid rgba(26,26,26,.18);border-radius:10px;padding:14px 18px;font-weight:600;font-size:14px;cursor:pointer;color:#1A1A1A}
 </style>
+<div id="trein-ov" onclick="if(event.target===this)fecharTreinamento()"><div id="trein-box">
+<div id="trein-top"><b>🎓 Treinamento · sua rotina de consultora</b><button onclick="fecharTreinamento()" title="Fechar">✕</button></div>
+<div id="trein-bar"><i id="trein-prog"></i></div><div id="trein-body"></div>
+<div id="trein-nav"><button onclick="treinIr(-1)" id="trein-v">← Voltar</button><span class="cnt" id="trein-cnt"></span><button class="pri" onclick="treinIr(1)" id="trein-p">Próximo →</button></div>
+</div></div>
 <div id="apres-ov" onclick="if(event.target===this)fecharApresentacao()">
   <div id="apres-box" role="dialog" aria-modal="true" aria-labelledby="apres-h">
     <div id="apres-top"><span>Eagler Gym · Hub de Gestão</span><button id="apres-x" type="button" onclick="fecharApresentacao()" aria-label="Fechar">×</button></div>
@@ -5492,6 +5583,43 @@ checkSessaoInicial();
 <script>
 // Apresentação guiada (somente gestor/a): aparece na 1ª visita, fica no botão do topo
 function apresPode(){try{return !!sessao&&(sessao.role==='gestor'||sessao.role==='admin')}catch(e){return false}}
+
+// ══ TREINAMENTO DA CONSULTORA (slides) ══
+const tf=(arr)=>'<div class="tflow">'+arr.map((x,i)=>(i?'<span class="a">→</span>':'')+'<div class="b '+(x[2]||'')+'">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</div>').join('')+'</div>';
+const TREIN=[
+ {ic:'🛡️',t:'Você é a guardiã do cliente',l:'Cada pessoa que procura a Eagler é uma chance de mudar a vida de alguém. Você é a primeira pessoa que ela encontra.',b:'<ul><li>Todo mundo que entra em contato é um <b>lead</b>.</li><li>Lead sem registro é lead perdido.</li><li>Seu trabalho todo dia: <b>atender bem, registrar e dar continuidade</b>.</li></ul><div class="tnota">Neste treinamento você vai ver, passo a passo, onde começa e onde termina a sua rotina. Leia com calma e, se puder, abra o sistema ao lado e vá testando.</div>'},
+ {ic:'🗺️',t:'Sua rotina em um desenho',l:'É sempre a mesma ordem, todos os dias.',b:tf([['1 · Abrir o Meu dia','agendamentos e pendências'],['2 · Trabalhar um funil por vez','ciclos de 1 hora'],['3 · Registrar cada tentativa','no card, na hora'],['4 · Lançar o dia','no fim do expediente','g']])+'<div class="tnota">Se chegar <b>lead novo</b> a qualquer momento: pare tudo, atenda, registre e volte. Você vai ver isso nos próximos slides.</div>'},
+ {ic:'✅',t:'Regra de ouro do lead',l:'Quatro coisas, sempre, sem exceção:',b:'<ul><li class="ok"><b>1 · Registrar no mesmo dia.</b> Chegou hoje, entra no sistema hoje.</li><li class="ok"><b>2 · Ter consultora responsável.</b> Todo lead tem dona: você.</li><li class="ok"><b>3 · Origem sempre clara.</b> De onde veio? Visita, WhatsApp, Instagram, indicação…</li><li class="ok"><b>4 · Próximo contato já agendado.</b> Sem data, o lead some do seu Meu dia.</li></ul>'},
+ {ic:'🚨',t:'Lead novo é prioridade absoluta',l:'Não importa o que você está fazendo. Lead novo passa na frente.',b:tf([['Você está trabalhando um funil'],['Chega lead novo','WhatsApp ou visita pessoal','y'],['Pare e atenda agora','texto + áudio, ou receba a visita','g'],['Registre o lead','Actuar → Kanban'],['Volte ao funil','de onde parou']])+'<ul><li>Principalmente <b>visita pessoal</b>: quem está na sua frente é a prioridade número um.</li><li>Depois de atender e registrar, volte para o funil que estava fazendo. Não é difícil de organizar.</li></ul>'},
+ {ic:'🆕',t:'O caminho do lead novo',l:'Chegou alguém? Siga este caminho:',b:tf([['1 · Atenda','texto no WhatsApp + áudio'],['2 · Cadastre no Actuar','sistema da academia','y'],['3 · Cadastre no Kanban','Campanhas → + Adicionar card'],['4 · Marque a origem','de onde ele veio'],['5 · Próximo contato','data marcada','g']])+'<div class="tnota">No Kanban o sistema pergunta "já cadastrou no Actuar?". Primeiro o Actuar, depois o Kanban.</div>'},
+ {ic:'📍',t:'A origem do lead',l:'Saber de onde veio permite saber o que está funcionando.',b:'<ul><li><b>Visita pessoal</b> · veio até a academia</li><li><b>WhatsApp tráfego pago</b> · veio de anúncio</li><li><b>WhatsApp orgânico</b> · veio por conta própria</li><li><b>Instagram / Facebook DM</b> · chegou pela rede social</li><li><b>Telefone receptivo</b> · ligou para a academia</li><li><b>Indicação</b> · um aluno indicou</li></ul><div class="tnota">Na dúvida, pergunte: "Como você conheceu a Eagler?" Anote a resposta.</div>'},
+ {ic:'↩️',t:'Reconexão: contato antigo',l:'No "pente fino" do WhatsApp você acha conversas antigas. Elas também viram lead no Kanban.',b:tf([['Escolha "Reconexão"','no cadastro do card'],['Data antiga','de quando a pessoa apareceu antes','y'],['Script de Retomada','nunca de primeiro contato','g'],['Texto + áudio','próximo contato marcado']])+'<ul><li>A pessoa já falou com a gente. A mensagem é diferente de um lead novo.</li><li>O card já mostra o script certo da biblioteca.</li></ul>'},
+ {ic:'🧭',t:'Os funis',l:'Cada pessoa está em um funil. Confirme sempre na faixa do topo do card.',b:'<ul><li>🆕 <b>Lead novo</b> · chegou agora</li><li>↩️ <b>Reconexão</b> · contato antigo que esfriou</li><li>🔁 <b>Ex-aluno</b> · quem já treinou e saiu</li><li>🔔 <b>Renovação</b> · aluno perto do vencimento</li></ul><div class="tnota">Funil certo = script certo. O card busca sozinho a mensagem da Biblioteca de scripts para o funil escolhido.</div>'},
+ {ic:'⏱️',t:'Um funil por vez: ciclos de 1 hora',l:'Foco rende mais do que pular de um lado para outro.',b:tf([['Escolha um funil','ex.: leads novos'],['1 hora direto','só nele, sem se dispersar','g'],['Pausa curta','e escolha o próximo funil']])+'<ul><li>Abra o <b>Meu dia</b> e trabalhe só os cards daquele funil.</li><li>Lead novo chegou? Atende primeiro (slide anterior) e depois volta.</li></ul>'},
+ {ic:'📞',t:'Cada tentativa de contato',l:'Mensagem, ligação ou os dois. Toda tentativa conta e precisa ser marcada.',b:tf([['Enviou mensagem','texto'],['Ligou','pessoa não atendeu','y'],['Áudio na hora','logo depois da ligação','g'],['Registrou','no card']])+'<ul><li class="ok">Ligou e <b>não atendeu</b>? Envie um <b>áudio imediatamente</b>. Assim a pessoa sabe quem tentou ligar e o contato fica mais próximo.</li><li class="ok"><b>No card:</b> marque cada tentativa (Registrar e salvar).</li><li class="ok"><b>No seu caderno:</b> anote o dia e o funil e faça um risquinho para cada tentativa, cada contato (quem respondeu ou atendeu) e cada agendamento. No fim do dia, é só somar.</li></ul>'},
+ {ic:'🎙️',t:'Texto + áudio, sempre',l:'São dois envios. Os dois.',b:'<ul><li class="ok">Lead novo ou reconexão: <b>texto no WhatsApp + áudio</b>.</li><li class="ok">O card já mostra o script sugerido. Se faltar o áudio, grave um curto (20 a 30 segundos) com a mesma ideia.</li><li class="ok"><b>Confirmação de agendamento nunca pergunta "você vem?".</b> Afirma: "estamos preparando algo legal para você".</li></ul>'},
+ {ic:'📅',t:'Agendamentos: o que conta',l:'Dois tipos entram na sua produtividade:',b:tf([['Experiência','dia em que ela inicia a experiência'],['Visita / matrícula','vem conhecer, tomar um café, fechar o plano','y']])+'<ul><li>Na hora de agendar, <b>marque data e hora</b> no card.</li><li>Quando a pessoa vem, marque <b>compareceu</b>. Quando não vem, marque <b>não compareceu</b>.</li></ul>'},
+ {ic:'🌅',t:'O dia seguinte ao agendamento',l:'O Meu dia mostra o que ficou para resolver.',b:tf([['Ontem tinha agendamento'],['Veio?','✅ ou ❌','y'],['Veio → peça feedback','mensagem pronta','g'],['Não veio → reagende','script de reconexão','g']])+'<div class="tnota">Quem não veio não está perdido. Reconecte e marque nova data.</div>'},
+ {ic:'📋',t:'Seu Meu dia em 3 blocos',l:'Tudo o que precisa fazer hoje, em ordem:',b:'<ul><li><b>1 · Agendamentos de dias anteriores</b> · veio ou não veio, feedback ou reagendar</li><li><b>2 · Agendamentos de hoje</b> · enviar a confirmação</li><li><b>3 · O resto do dia</b> · retornos, cadências e primeiras tentativas da lista</li></ul>'},
+ {ic:'🔢',t:'Os números do seu dia',l:'Cada consultora tem o seu caderno. Se você anotar enquanto trabalha, o fim do dia sai em minutos.',b:'<ul><li class="ok"><b>Caderno:</b> data, funil e risquinhos de tentativas, contatos e agendamentos.</li><li><b>Tentativas</b> · quantas vezes você tentou contato</li><li><b>Contatos efetivos</b> · quantos <b>responderam ou atenderam</b> no mesmo dia</li><li><b>Agendamentos</b> · quantos marcaram experiência ou visita</li></ul>'+tf([['Tentativas'],['Contatos','responderam ou atenderam'],['Agendamentos','','g']])},
+ {ic:'💰',t:'Recebeu um plano? Lance na hora',l:'Todo plano que você receber vira uma linha no caixa, com o nome de quem pagou.',b:'<ul><li class="ok"><b>Nome completo</b> do aluno</li><li class="ok"><b>Tipo:</b> plano novo, renovação ou rematrícula (ex-aluno voltando)</li><li class="ok"><b>Plano:</b> anual, mensal, especial…</li><li class="ok"><b>Valor</b> e <b>forma de pagamento</b></li><li class="ok"><b>Quem recebeu</b> e a <b>consultora responsável</b> pelo cliente ou lead</li></ul><div class="tnota">Pode ser até uma mensalidade. No fim do dia, o resumo já usa essas vendas para preencher o seu relatório.</div>'},
+ {ic:'✍️',t:'Fim do dia: lançar o dia',l:'Cada consultora lança o seu relatório.',b:'<ul><li>Clique em <b>Lançar Dia</b> (botão vermelho no topo).</li><li>Veja o <b>Resumo do seu dia</b> e confira com o seu caderno: tentativas, contatos, agendamentos e vendas.</li><li>Se estiver certo, marque "Conferi" e <b>envie para o relatório</b>. Se não, clique em Ajustar.</li><li>Se a sua lista for diferente da do Kanban, cadastre os leads que faltam.</li><li>Depois acompanhe em <b>Meu resultado</b> como você está evoluindo.</li></ul>'},
+ {ic:'🎯',t:'Checklist para o treinamento de amanhã',l:'Se você leu isto, você já está pronta. Confira:',b:'<ul><li class="ok">Sei que todo contato é um lead e que registro no mesmo dia.</li><li class="ok">Sei que lead novo é prioridade, principalmente a visita pessoal.</li><li class="ok">Sei o caminho: Actuar → Kanban → origem → próximo contato.</li><li class="ok">Sei trabalhar um funil por vez, em ciclos de 1 hora.</li><li class="ok">Sei que ligou e não atendeu = áudio na hora.</li><li class="ok">Sei o que lançar no fim do dia.</li></ul><div class="tnota">Dúvidas? Anote e leve para a reunião. 💪</div>'}
+];
+let treinI=0;
+function abrirTreinamento(i){treinI=i||0;document.getElementById('trein-ov').classList.add('show');treinMostrar()}
+function fecharTreinamento(){document.getElementById('trein-ov').classList.remove('show')}
+function treinIr(d){const n=TREIN.length;if(treinI+d>=n){fecharTreinamento();return}if(treinI+d<0)return;treinI+=d;treinMostrar()}
+function treinMostrar(){
+  const sl=TREIN[treinI],n=TREIN.length;
+  document.getElementById('trein-body').innerHTML='<div class="ic">'+sl.ic+'</div><h2>'+sl.t+'</h2><div class="lead">'+sl.l+'</div>'+sl.b;
+  document.getElementById('trein-body').scrollTop=0;
+  document.getElementById('trein-prog').style.width=((treinI+1)/n*100)+'%';
+  document.getElementById('trein-cnt').textContent='Slide '+(treinI+1)+' de '+n;
+  document.getElementById('trein-v').style.visibility=treinI?'visible':'hidden';
+  document.getElementById('trein-p').textContent=treinI===n-1?'Concluir ✔':'Próximo →';
+}
+document.addEventListener('keydown',e=>{const o=document.getElementById('trein-ov');if(!o||!o.classList.contains('show'))return;if(e.key==='Escape')fecharTreinamento();if(e.key==='ArrowRight')treinIr(1);if(e.key==='ArrowLeft')treinIr(-1)});
 function abrirApresentacao(){document.getElementById('apres-ov').classList.add('show')}
 function fecharApresentacao(){document.getElementById('apres-ov').classList.remove('show');try{localStorage.setItem('eagler_apres_vista','1')}catch(e){}}
 function iniciarApresentacao(){

@@ -649,8 +649,8 @@ header.top button,header.top a{color:rgba(255,255,255,.88)}
 
 <div class="modal-ov" id="m-venda">
   <div class="modal" style="max-width:460px">
-    <div class="modal-hd"><h3>💰 Registrar Venda</h3><button class="btn-x" onclick="cancelarVendaModal()">×</button></div>
-    <p style="font-size:12.5px;color:var(--texto2);margin-bottom:14px">Antes de marcar como Convertido, confirme os dados da venda, vira uma linha automática no seu Livro de Vendas.</p>
+    <div class="modal-hd"><h3 id="v-titulo">💰 Registrar Venda</h3><button class="btn-x" onclick="cancelarVendaModal()">×</button></div>
+    <p style="font-size:12.5px;color:var(--texto2);margin-bottom:14px">Confira os dados: vira uma linha no Livro de Vendas, com o nome completo, o valor, o plano e quem recebeu.</p>
     <div class="form-row">
       <div class="fg"><label>Nome do Cliente</label><input class="fi" id="v-nome"></div>
       <div class="fg"><label>Nº Matrícula</label><input class="fi" id="v-matricula"></div>
@@ -675,6 +675,10 @@ header.top button,header.top a{color:rgba(255,255,255,.88)}
       <div class="fg"><label>Valor da Venda (R$) *</label><input class="fi" type="number" id="v-valor" placeholder="0,00" min="0"></div>
       <div class="fg"><label>Saldo Devedor (R$)</label><input class="fi" type="number" id="v-saldo" placeholder="0,00" min="0"></div>
     </div>
+    <div class="fg" style="margin-bottom:10px">
+      <label>Plano (duração)</label>
+      <select class="fsel" id="v-plano"><option value="">Selecione…</option><option value="anual">Anual</option><option value="mensal">Mensal</option><option value="especial">Especial</option><option value="recorrencia">Recorrência</option><option value="outro">Outro</option></select>
+    </div>
     <div class="fg" style="margin-bottom:16px">
       <label>Forma de Pagamento</label>
       <select class="fsel" id="v-pgto">
@@ -692,7 +696,7 @@ header.top button,header.top a{color:rgba(255,255,255,.88)}
       <div class="fg"><label>Venda atribuída a</label><select class="fsel" id="v-atribuido-a"></select></div>
     </div>
     <p style="font-size:11.5px;color:var(--texto2);margin-top:-10px;margin-bottom:16px">"Lançado por" é quem está registrando agora. "Atribuída a" é quem fez o CRM/agendou, é essa pessoa que recebe o crédito da venda, mesmo que outra tenha atendido no fechamento.</p>
-    <button class="btn-primary" style="width:100%" onclick="confirmarVendaModal()">✅ Confirmar Venda e Converter</button>
+    <button class="btn-primary" id="v-btn" style="width:100%" onclick="confirmarVendaModal()">✅ Confirmar Venda e Converter</button>
   </div>
 </div>
 </div>
@@ -839,6 +843,7 @@ async function iniciarApp(s){
   // esse perfil e já entra nela, sem passar pela lista.
   const abaParam=new URLSearchParams(window.location.search).get('aba');
   if(abaParam==='agenda'){try{switchITab('agenda');if(typeof carregarAgenda==='function')carregarAgenda();}catch(e){console.error(e);}}
+  if(abaParam==='vendas'){try{switchITab('vendas');await carregarLivroVendas();if(new URLSearchParams(location.search).get('novo')==='1')abrirRecebimentoAvulso();}catch(e){console.error(e);}}
   const openPerfil=new URLSearchParams(window.location.search).get('openPerfil');
   if(openPerfil){
     const campAlvo=minhasCampanhas.find(c=>c.status==='ativa'&&(c.perfis||[]).includes(openPerfil));
@@ -1422,6 +1427,7 @@ async function carregarLivroVendas(){
       <div class="fg"><label class="fl">Até</label><input class="fi" type="date" id="vd-fim" value="${hoje}"></div>
       <button class="btn-primary" onclick="aplicarFiltroVendas()">Filtrar</button>
       <button class="btn-gh" onclick="document.getElementById('vd-inicio').value=document.getElementById('vd-fim').value=new Date().toISOString().slice(0,10);aplicarFiltroVendas()">Hoje</button>
+      <button class="btn-primary" style="background:var(--verde);border-color:var(--verde)" onclick="abrirRecebimentoAvulso()">➕ 💰 Lançar recebimento</button>
     </div>
     <div id="vendasConteudo"><div class="ag-empty">Carregando...</div></div>
   `;
@@ -2492,6 +2498,7 @@ function cancelarAgendamentoModal(){
 let _resolveVendaModal=null;
 const PERFIL_VENDA_PADRAO={leads:'novo',rematricula:'rematricula',renovacao:'renovacao'};
 function pedirDadosVenda(card){
+  document.getElementById('v-titulo').textContent='💰 Registrar Venda';document.getElementById('v-btn').textContent='✅ Confirmar Venda e Converter';document.getElementById('v-plano').value='';
   document.getElementById('v-nome').value=card.nome;
   document.getElementById('v-matricula').value=card.codigo_matricula||'';
   document.getElementById('v-perfil').value=PERFIL_VENDA_PADRAO[card.perfil]||'novo';
@@ -2522,6 +2529,7 @@ function confirmarVendaModal(){
     valor,
     saldo_devedor:parseFloat(document.getElementById('v-saldo').value)||0,
     forma_pagamento:document.getElementById('v-pgto').value,
+    plano_duracao:document.getElementById('v-plano').value||null,
     lancado_por_id:document.getElementById('v-lancado-por').value||null,
     atribuido_a_id:atribuidoA
   };
@@ -2535,15 +2543,41 @@ function cancelarVendaModal(){
   _resolveVendaModal=null;
 }
 async function registrarLinhaVenda(card,dados){
-  await sbPost('eagler_vendas',{
-    campanha_id:card.campanha_id,card_id:card.id,academia_id:sessao.academia_id,
+  const corpo={
+    campanha_id:card?card.campanha_id:null,card_id:card?card.id:null,academia_id:sessao.academia_id,
     consultora_id:dados.atribuido_a_id,lancado_por_id:dados.lancado_por_id,
     data:new Date().toISOString().slice(0,10),
     nome_cliente:dados.nome_cliente,codigo_matricula:dados.codigo_matricula,
     perfil_venda:dados.perfil_venda,valor:dados.valor,forma_pagamento:dados.forma_pagamento,
     saldo_devedor:dados.saldo_devedor,tipo_venda:dados.tipo_venda,conferido_lider:false,
     created_at:Date.now()
-  });
+  };
+  try{await sbPost('eagler_vendas',Object.assign({},corpo,{plano_duracao:dados.plano_duracao||null}));}
+  catch(e){ // coluna plano_duracao ainda não criada no Supabase: salva sem ela
+    console.error(e);await sbPost('eagler_vendas',corpo);
+  }
+}
+// ── Lançar recebimento avulso (mensalidade, plano de aluno fora do Kanban etc.)
+async function abrirRecebimentoAvulso(){
+  document.getElementById('v-titulo').textContent='💰 Lançar recebimento';
+  document.getElementById('v-btn').textContent='✅ Lançar recebimento';
+  document.getElementById('v-nome').value='';document.getElementById('v-matricula').value='';
+  document.getElementById('v-perfil').value='renovacao';document.getElementById('v-tipo').value='espontaneo';
+  document.getElementById('v-valor').value='';document.getElementById('v-saldo').value='';
+  document.getElementById('v-pgto').value='pix';document.getElementById('v-plano').value='';
+  const opts=consultoras.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
+  const sl=document.getElementById('v-lancado-por'),sa=document.getElementById('v-atribuido-a');
+  sl.innerHTML=opts;sa.innerHTML=opts;
+  if(sessao.role==='consultor'&&sessao.consultora_id){sl.value=sessao.consultora_id;sa.value=sessao.consultora_id;}
+  openM('m-venda');
+  const dados=await new Promise(r=>{_resolveVendaModal=r;});
+  if(!dados)return;
+  if(!dados.nome_cliente){toast('Informe o nome completo do aluno',true);return abrirRecebimentoAvulso();}
+  try{
+    await registrarLinhaVenda(null,dados);
+    toast('Recebimento lançado ✔');
+    if(typeof carregarLivroVendas==='function')await carregarLivroVendas();
+  }catch(e){console.error(e);toast('Erro ao lançar recebimento',true);}
 }
 
 async function onDropCard(ev,novaEtapa){
