@@ -1823,6 +1823,24 @@ async function mdMarcar(id,veio){
     const c=ultimosCardsAgenda.find(x=>x.id===id);if(c){c.compareceu=veio;c.compareceu_em=Date.now();}
     toast(veio?'Marcado: veio ✅ Agora peça o feedback.':'Marcado: não veio. Agora faça o reagendamento.');
     renderAgenda(ultimosCardsAgenda);
+    if(veio&&c&&!c.treinador_id&&c.etapa_atual==='exp_agendada'&&treinadores.length)mdPerguntarTreinador(id);
+  }catch(e){console.error(e);toast('Não consegui salvar',true);}
+}
+
+function mdPerguntarTreinador(id){
+  const c=ultimosCardsAgenda.find(x=>x.id===id);if(!c)return;
+  abrirModalGenerico(`<div class="modal" style="max-width:420px"><div class="modal-hd"><h3>👤 Qual treinador atendeu?</h3><button class="btn-x" onclick="fecharModalGenerico()">×</button></div>
+    <p style="font-size:13px;color:var(--texto2);margin-bottom:12px"><b>${mdEsc(c.nome)}</b> veio. Para qual treinador você apresentou a experiência? Esse treinador fica responsável por ela.</p>
+    <select class="fsel" id="md-trein" style="width:100%;margin-bottom:14px"><option value="">Selecione…</option>${treinadores.map(t=>`<option value="${t.id}">${mdEsc(t.nome)}</option>`).join('')}</select>
+    <button class="btn-primary" style="width:100%" onclick="mdSalvarTreinador('${id}')">Salvar treinador</button></div>`);
+}
+async function mdSalvarTreinador(id){
+  const v=document.getElementById('md-trein').value;
+  if(!v){toast('Escolha o treinador',true);return;}
+  try{
+    await sbPatch('eagler_campanha_cards',id,{treinador_id:v,updated_at:Date.now()});
+    const c=ultimosCardsAgenda.find(x=>x.id===id);if(c)c.treinador_id=v;
+    fecharModalGenerico();toast('Treinador registrado ✔');renderAgenda(ultimosCardsAgenda);
   }catch(e){console.error(e);toast('Não consegui salvar',true);}
 }
 function mdLinhaAg(a,hojeISO,fase){
