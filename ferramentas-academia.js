@@ -682,5 +682,17 @@ function cadencia(){
   });
   return out;
 }
-window.FT_ACADEMIA={CFG,PERFIS,CANAIS,FUNIS,S,OBJECOES,NAOS,ROTINA,cadencia,fill};
+function cadenciaFunil(id){
+  const f=FUNIS.find(x=>x.id===id);if(!f)return [];
+  const ts=[...new Set(S.filter(s=>s.f===f.id&&s.t).map(s=>s.t))].sort((a,b)=>a-b);
+  return ts.map(t=>{
+    const o1=S.find(s=>s.f===f.id&&s.t===t&&s.opc===1),o2=S.find(s=>s.f===f.id&&s.t===t&&s.opc===2);
+    if(!o1)return null;
+    const et=f.etapas.find(e=>e.id===o1.e);
+    const conv=s=>s&&{tipo:(CANAIS[s.canal]||s.canal).replace(/^\S+\s/,''),texto:fill(s.texto).replaceAll('[Nome]','{NOME}').replaceAll('[nome]','{NOME}'),obj:s.obj,aqui:s.aqui,op:fill(s.op),canal:s.canal};
+    const c1=conv(o1);
+    return Object.assign(c1,{tipo:`${o1.dia} · ${c1.tipo} · ${et?et.nome:''}`,funil:f.id,opcao2:conv(o2)});
+  }).filter(Boolean);
+}
+window.FT_ACADEMIA={cadenciaFunil,CFG,PERFIS,CANAIS,FUNIS,S,OBJECOES,NAOS,ROTINA,cadencia,fill};
 })();

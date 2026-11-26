@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gravar hoje · Eagler Gym</title><meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8F6F6;--card:#fff;--line:#E8E1E1;--ink:#1A1A1A;--ink2:#5A5252;--ac:#D91E18;--ok:#2E9E5B}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Barlow',system-ui,sans-serif;font-size:16px;line-height:1.45}
+h1,h2{font-family:'Barlow Condensed',sans-serif;margin:0}
+header{background:#111;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:14px}header a{color:#FF6B63;text-decoration:none;font-weight:700}
+main{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+.intro{background:#FFF7E0;border:1px solid #F0D58A;border-radius:12px;padding:12px 14px;margin:12px 0 18px;font-size:14px}
+.sec{margin:20px 0 8px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.item.feito{background:#EAF7EE;border-color:#BFE6CC}.item .tx{flex:1}.item b{display:block;font-size:16px}.item small{color:var(--ink2);display:block;margin-top:3px;font-size:13.5px}
+.tag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;border-radius:6px;padding:2px 8px;background:#111;color:#fff;margin-bottom:4px}.tag.r{background:var(--ac)}
+.chk{width:30px;height:30px;flex:none;margin-top:2px;accent-color:var(--ok)}
+.vazio{padding:30px;text-align:center;color:var(--ink2)}
+</style></head><body>
+<header><a href="index.html" id="voltar">← Voltar ao Hub</a><b style="font-family:'Barlow Condensed';font-size:22px">🎥 Gravar hoje</b></header>
+<main><span class="tag" style="background:#9A6A00">Prévia · em breve</span><h1 id="data" style="font-size:34px"></h1>
+<div class="intro">🚧 <b>Em breve.</b> Esta tela ainda está sendo construída. Abaixo está só uma <b>prévia</b> do que vai aparecer aqui: a lista do que gravar no dia (reel, post e stories), com orientação de quem grava. Por enquanto, é apenas uma sugestão e não precisa fazer nada.</div>
+<div id="app"><div class="vazio">Carregando…</div></div></main>
+<script>
+const SB_URL="https://irwvagffrguiljaxrzmd.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyd3ZhZ2Zmcmd1aWxqYXhyem1kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNDk5ODUsImV4cCI6MjEwNDkyNTk4NX0.YAApyaH6iIHEua_89fgCUpMzgXRIcWb_vNRkBQAoq5A";
+const H={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+let sessao=null,row=null,dados=null;
+const toast=m=>console.log(m);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+async function sbGet(t,q){const r=await fetch(`${SB_URL}/rest/v1/${t}?${q}`,{headers:H});if(!r.ok)throw new Error(await r.text());return r.json()}
+async function sbUpsert(t,b){const r=await fetch(`${SB_URL}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json()}
+function iso(d){const z=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())}
+</script>
+<script src="marketing-projeto.js"></script>
+<script>
+const DIAS=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+(async function(){
+  const uid=new URLSearchParams(location.search).get('uid');
+  if(uid){try{const r=await sbGet('eagler_gestores',`id=eq.${encodeURIComponent(uid)}&ativo=eq.true&select=id,nome,academia_id,role,consultora_id`);if(r.length){sessao=r[0];sessionStorage.setItem('gravar_sessao',JSON.stringify(sessao));history.replaceState(null,'',location.pathname)}}catch(e){console.error(e)}}
+  if(!sessao){try{sessao=JSON.parse(sessionStorage.getItem('gravar_sessao')||'null')}catch(e){}}
+  if(!sessao){$('app').innerHTML='<div class="vazio">Abra esta página pelo menu do Hub, já logada.</div>';return}
+  const h=new Date();$('data').textContent=DIAS[(h.getDay()+6)%7]+', '+String(h.getDate()).padStart(2,'0')+'/'+String(h.getMonth()+1).padStart(2,'0');
+  try{const rows=await sbGet('eagler_marketing_projeto','academia_id=eq.'+encodeURIComponent(sessao.academia_id));row=rows[0];}catch(e){console.error(e)}
+  if(!row||!row.dados||!row.dados.campos){$('app').innerHTML='<div class="vazio">O plano de marketing ainda não foi montado. Avise o Nelson.</div>';return}
+  dados=row.dados;dados.status=dados.status||{};
+  $('app').innerHTML='<div class="vazio" style="font-size:17px">🎥 <b>Em breve</b><br><br>Aqui vai aparecer o que gravar no dia (stories, reels e anúncios), de um jeito simples para você seguir.<br>Por enquanto, não precisa fazer nada nesta tela.</div>';
+})();
+async function marcar(key,v){
+  if(v)dados.status[key]=true;else delete dados.status[key];
+  try{const d=JSON.parse(JSON.stringify(dados));await sbUpsert('eagler_marketing_projeto',{academia_id:sessao.academia_id,dados:d,updated_at:Date.now()});location.reload()}catch(e){console.error(e);alert('Não consegui salvar. Tente de novo.')}
+}
+</script></body></html>

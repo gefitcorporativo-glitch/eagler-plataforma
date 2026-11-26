@@ -349,6 +349,18 @@ async function iniciar(){
   if(!sessao){try{sessao=JSON.parse(sessionStorage.getItem('central_leads_sessao')||'null')}catch(e){}}
   if(!sessao){$('tela-login').hidden=false;return}
   $('user').textContent=sessao.nome||sessao.email||'';
+  if(sessao.role==='consultor'){
+    document.body.classList.add('cons-ro');
+    const st=document.createElement('style');
+    st.textContent=`.cons-ro .tab[data-t="links"],.cons-ro .tab[data-t="ind"],.cons-ro #f-ind,.cons-ro #f-oc,.cons-ro #f-cons,.cons-ro label[for="f-ind"],.cons-ro label[for="f-oc"],.cons-ro label[for="f-cons"],
+    .cons-ro .acoes .btn[onclick*="imprimirSorteio"],.cons-ro .acoes .btn[onclick*="exportarCSV"],.cons-ro .acoes .btn[onclick*="enviarParaCampanha"],.cons-ro #btn-ocultar,.cons-ro #btn-reexibir,
+    .cons-ro #ck-todos,.cons-ro #tb td:first-child .ck{display:none!important}
+    .cons-ro #tb select{pointer-events:none;appearance:none;-webkit-appearance:none;border:none;background:none;font-weight:700}
+    .cons-ro .ro-aviso{background:#FFF7E0;border:1px solid #F0D58A;border-radius:10px;padding:10px 14px;margin:12px 0;font-size:14px}`;
+    document.head.appendChild(st);
+    const av=document.createElement('div');av.className='ro-aviso';av.innerHTML='👀 <b>Aqui você só acompanha os leads que estão chegando.</b> Para trabalhar um lead, cadastre no Actuar e depois adicione no Kanban (Campanhas).';
+    $('app').insertBefore(av,$('app').firstChild);
+  }
   acad=(sessao.role==='admin'&&GF_AC)||sessao.academia_id;
   if(sessao.role==='admin'){
     try{const ac=await sbGet(P+'academias','select=id,nome&order=nome');
